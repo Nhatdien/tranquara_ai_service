@@ -1,0 +1,23 @@
+services:
+  ai_service: 
+    build: 
+      context: .
+      dockerfile: ./Dockerfile.yml
+    ports: 
+      - "8000:8000"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+  mongodb: 
+    image: "mongo"
+    ports:
+    - '27017:27017'
+    environment:
+    - MONGO_INITDB_DATABASE=tranquara_ai_service
+    - MONGO_INITDB_ROOT_USERNAME=mongoadmin
+    - MONGO_INITDB_ROOT_PASSWORD=Nhatdien123
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh mongodb:27017/tranquara_ai_service --quiet
+      interval: 10s
+      retries: 5

@@ -5,6 +5,10 @@ uvicorn
 langchain
 langchain-community
 langchain-openai
-faiss
+faiss-cpu
 
+#pdf loader
 pypdf
+
+#mongodb client
+motor

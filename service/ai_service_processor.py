@@ -46,7 +46,6 @@ class AIProcessor():
         )
 
         user_data = user_data.__dict__
-        print(user_data)
         query = f"Mindfulness guidance for Week {user_data['current_week']} related to {user_data['chatbot_interaction']}"
         retrieved_docs = self.retriever.invoke(input=query)
 
