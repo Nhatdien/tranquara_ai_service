@@ -1,5 +1,8 @@
-fastapi
-uvicorn
+# fastapi
+# uvicorn
+
+#rabbitmq
+pika
 
 #langchain
 langchain
