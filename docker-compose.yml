@@ -5,6 +5,8 @@ services:
       dockerfile: ./Dockerfile.yml
     ports: 
       - "8000:8000"
+    networks:
+      - tranquara-network
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -19,6 +21,8 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - tranquara-network
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 15s
@@ -39,5 +43,6 @@ services:
       retries: 4
       timeout: 20s
 
-
-
+networks:
+  tranquara-network:
+    external: true

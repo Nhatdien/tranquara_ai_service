@@ -14,6 +14,7 @@ def main():
     def callback(ch, method, properties, body):
        print(f"{ch}, {body}, {properties}")
 
+    print(rabbitmq.channel, rabbitmq.connection)
     rabbitmq.channel.queue_declare("ai_tasks")
     rabbitmq.channel.queue_declare("ai_response")
 
@@ -28,6 +29,7 @@ def main():
         sys.exit(1)
     finally:
         rabbitmq.close()
+    
 
 if __name__ == "__main__":
     try:

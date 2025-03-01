@@ -13,5 +13,8 @@ faiss-cpu
 #pdf loader
 pypdf
 
+#
+asyncio
+
 #mongodb client
 motor
