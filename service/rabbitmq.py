@@ -14,6 +14,7 @@ class RabbitMQ:
         self.connect()
 
     def connect(self):
+
         print("calling conenct")
         credentials = pika.PlainCredentials(self.user, self.password)
         parameters = pika.ConnectionParameters(host=self.host, port=self.port, credentials=credentials, blocked_connection_timeout=200, connection_attempts=5)

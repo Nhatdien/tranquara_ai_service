@@ -7,13 +7,29 @@ from utils.utils import init_mongo
 from config import settings as global_settings
 
 dotenv.load_dotenv()
-        
+
+def callback(ch, method, properties, body):
+        ai_processor = AIProcessor()
+        parser = JsonOutputParser(pydantic_object=AIGuidanceResponse)
+        user_data = {
+            "current_week": 1,
+            "chatbot_interaction": "telling chatbot about his depression",
+            "emotion_tracking": "Feeling stressful lately"
+        }
+        user_pass_data = UserDataForGuidence(**user_data)
+        res = ai_processor.provide_guidence_process(user_data=user_pass_data, parser=parser)
+        print(res, type(res))
+        ch.basic_publish(exchange='',
+                        routing_key="ai_response",
+                        body=json.dumps(res),
+                        properties=pika.BasicProperties(
+                        delivery_mode=2,  # make message persistent
+                    ))
+        print(f"{ch}, {body}, {properties}")
+
 def main():
     print("testing")
     rabbitmq = RabbitMQ()
-    def callback(ch, method, properties, body):
-       print(f"{ch}, {body}, {properties}")
-
     print(rabbitmq.channel, rabbitmq.connection)
     rabbitmq.channel.queue_declare("ai_tasks")
     rabbitmq.channel.queue_declare("ai_response")
