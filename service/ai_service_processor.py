@@ -63,7 +63,7 @@ class AIProcessor():
         )
 
         # Invoke Chain
-        res = chain.stream({
+        res = chain.invoke({
             "context": context_text,
             "current_week": user_data["current_week"],
             "chatbot_interaction": user_data["chatbot_interaction"],

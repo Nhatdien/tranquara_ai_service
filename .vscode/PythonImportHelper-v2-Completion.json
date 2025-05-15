@@ -1,0 +1,343 @@
+[
+    {
+        "label": "motor.motor_asyncio",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "motor.motor_asyncio",
+        "description": "motor.motor_asyncio",
+        "detail": "motor.motor_asyncio",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "dotenv",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "ChatOpenAI",
+        "importPath": "langchain_openai.chat_models",
+        "description": "langchain_openai.chat_models",
+        "isExtraImport": true,
+        "detail": "langchain_openai.chat_models",
+        "documentation": {}
+    },
+    {
+        "label": "PromptTemplate",
+        "importPath": "langchain_core.prompts",
+        "description": "langchain_core.prompts",
+        "isExtraImport": true,
+        "detail": "langchain_core.prompts",
+        "documentation": {}
+    },
+    {
+        "label": "JsonOutputParser",
+        "importPath": "langchain_core.output_parsers",
+        "description": "langchain_core.output_parsers",
+        "isExtraImport": true,
+        "detail": "langchain_core.output_parsers",
+        "documentation": {}
+    },
+    {
+        "label": "JsonOutputParser",
+        "importPath": "langchain_core.output_parsers",
+        "description": "langchain_core.output_parsers",
+        "isExtraImport": true,
+        "detail": "langchain_core.output_parsers",
+        "documentation": {}
+    },
+    {
+        "label": "PyPDFLoader",
+        "importPath": "langchain_community.document_loaders",
+        "description": "langchain_community.document_loaders",
+        "isExtraImport": true,
+        "detail": "langchain_community.document_loaders",
+        "documentation": {}
+    },
+    {
+        "label": "FAISS",
+        "importPath": "langchain_community.vectorstores",
+        "description": "langchain_community.vectorstores",
+        "isExtraImport": true,
+        "detail": "langchain_community.vectorstores",
+        "documentation": {}
+    },
+    {
+        "label": "OpenAIEmbeddings",
+        "importPath": "langchain_openai",
+        "description": "langchain_openai",
+        "isExtraImport": true,
+        "detail": "langchain_openai",
+        "documentation": {}
+    },
+    {
+        "label": "AI_SERVICE_CONFIG",
+        "importPath": "config",
+        "description": "config",
+        "isExtraImport": true,
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "UserDataForGuidence",
+        "importPath": "models.user",
+        "description": "models.user",
+        "isExtraImport": true,
+        "detail": "models.user",
+        "documentation": {}
+    },
+    {
+        "label": "UserDataForGuidence",
+        "importPath": "models.user",
+        "description": "models.user",
+        "isExtraImport": true,
+        "detail": "models.user",
+        "documentation": {}
+    },
+    {
+        "label": "AIGuidanceResponse",
+        "importPath": "models.user",
+        "description": "models.user",
+        "isExtraImport": true,
+        "detail": "models.user",
+        "documentation": {}
+    },
+    {
+        "label": "pika",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pika",
+        "description": "pika",
+        "detail": "pika",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "BaseSettings",
+        "importPath": "pydantic_settings",
+        "description": "pydantic_settings",
+        "isExtraImport": true,
+        "detail": "pydantic_settings",
+        "documentation": {}
+    },
+    {
+        "label": "BaseSettings",
+        "importPath": "pydantic_settings",
+        "description": "pydantic_settings",
+        "isExtraImport": true,
+        "detail": "pydantic_settings",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "asyncio",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "asyncio",
+        "description": "asyncio",
+        "detail": "asyncio",
+        "documentation": {}
+    },
+    {
+        "label": "RabbitMQ",
+        "importPath": "service.rabbitmq",
+        "description": "service.rabbitmq",
+        "isExtraImport": true,
+        "detail": "service.rabbitmq",
+        "documentation": {}
+    },
+    {
+        "label": "AIProcessor",
+        "importPath": "service.ai_service_processor",
+        "description": "service.ai_service_processor",
+        "isExtraImport": true,
+        "detail": "service.ai_service_processor",
+        "documentation": {}
+    },
+    {
+        "label": "tornado",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tornado",
+        "description": "tornado",
+        "detail": "tornado",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 5,
+        "importPath": "database.database",
+        "description": "database.database",
+        "peekOfCode": "client = motor.motor_asyncio.AsyncIOMotorClient(\"mongodb://mongodb:27017\")\n# database = client[\"tranquara_ai_service\"]",
+        "detail": "database.database",
+        "documentation": {}
+    },
+    {
+        "label": "UserDataForGuidence",
+        "kind": 6,
+        "importPath": "models.user",
+        "description": "models.user",
+        "peekOfCode": "class UserDataForGuidence(BaseModel):\n    current_week: int\n    chatbot_interaction: str\n    emotion_tracking: str\nclass AIGuidanceResponse(BaseModel):\n    suggest_mindfulness_tip: str = Field(description=\"Tip for the user\")\n    explaination: str = Field(description=\"Explanation for the tip provided\")",
+        "detail": "models.user",
+        "documentation": {}
+    },
+    {
+        "label": "AIGuidanceResponse",
+        "kind": 6,
+        "importPath": "models.user",
+        "description": "models.user",
+        "peekOfCode": "class AIGuidanceResponse(BaseModel):\n    suggest_mindfulness_tip: str = Field(description=\"Tip for the user\")\n    explaination: str = Field(description=\"Explanation for the tip provided\")",
+        "detail": "models.user",
+        "documentation": {}
+    },
+    {
+        "label": "AIProcessor",
+        "kind": 6,
+        "importPath": "service.ai_service_processor",
+        "description": "service.ai_service_processor",
+        "peekOfCode": "class AIProcessor():\n    def __init__(self):\n        self.model = ChatOpenAI(\n            api_key=os.environ['OPENAI_API_KEY'], model=\"gpt-4o-mini\", streaming=True)\n        self.vector_store = self.load_or_create_faiss_index()\n        self.retriever = self.vector_store.as_retriever()\n    def provide_guidence_process(self, user_data: UserDataForGuidence, parser: JsonOutputParser):\n        prompt_text = '''\n            You are an AI-powered mindfulness chatbot. The user follows a **structured 8-week mindfulness program**.\n            With context: {context}",
+        "detail": "service.ai_service_processor",
+        "documentation": {}
+    },
+    {
+        "label": "FAISS_INDEX_PATH",
+        "kind": 5,
+        "importPath": "service.ai_service_processor",
+        "description": "service.ai_service_processor",
+        "peekOfCode": "FAISS_INDEX_PATH = \"faiss_index\"\nclass AIProcessor():\n    def __init__(self):\n        self.model = ChatOpenAI(\n            api_key=os.environ['OPENAI_API_KEY'], model=\"gpt-4o-mini\", streaming=True)\n        self.vector_store = self.load_or_create_faiss_index()\n        self.retriever = self.vector_store.as_retriever()\n    def provide_guidence_process(self, user_data: UserDataForGuidence, parser: JsonOutputParser):\n        prompt_text = '''\n            You are an AI-powered mindfulness chatbot. The user follows a **structured 8-week mindfulness program**.",
+        "detail": "service.ai_service_processor",
+        "documentation": {}
+    },
+    {
+        "label": "RabbitMQ",
+        "kind": 6,
+        "importPath": "service.rabbitmq",
+        "description": "service.rabbitmq",
+        "peekOfCode": "class RabbitMQ:\n    def __init__(self):\n        self.user = os.getenv('RABBITMQ_USER', 'guest')\n        self.password = os.getenv('RABBITMQ_PASSWORD', 'guest')\n        self.host = os.getenv('RABBITMQ_HOST', 'rabbitmq')\n        self.port = int(os.getenv('RABBITMQ_PORT', 5672))\n        self.connection = None\n        self.channel = None\n        self.connect()\n    def connect(self):",
+        "detail": "service.rabbitmq",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "kind": 6,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "class Settings(BaseSettings):\n    pass\nsettings = Settings()",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "AI_SERVICE_CONFIG",
+        "kind": 5,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "AI_SERVICE_CONFIG = {\n    \"FAISS_INDEX_PATH\": \"faiss_index\",\n    \"DOCUMENT_PATH\": \"The_Mindful_Way_Workbook.pdf\"\n}\ndotenv.load_dotenv()\nclass Settings(BaseSettings):\n    pass\nsettings = Settings()",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "kind": 5,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "settings = Settings()",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "is_virtualenv",
+        "kind": 2,
+        "importPath": "current_environment",
+        "description": "current_environment",
+        "peekOfCode": "def is_virtualenv():\n    return hasattr(sys, 'real_prefix')  or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix)\nif is_virtualenv():\n    print(\"Running inside a virtual environment.\")\nelse:\n    print(\"Not running inside a virtual environment.\")",
+        "detail": "current_environment",
+        "documentation": {}
+    },
+    {
+        "label": "WebSocketServer",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class WebSocketServer(tornado.websocket.WebSocketHandler):\n    \"\"\"Simple WebSocket handler to serve clients.\"\"\"\n    # Note that `clients` is a class variable and `send_message` is a\n    # classmethod.\n    clients = set()\n    def on_message(self, message):\n        self.write_message(u\"You said: \" + message)\n    def open(self):\n        self.clients.add(self)\n    def on_close(self):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "callback",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def callback(ch, method, properties, body):\n    ai_processor = AIProcessor()\n    parser = JsonOutputParser(pydantic_object=AIGuidanceResponse)\n    user_data = json.load(body)\n    user_pass_data = UserDataForGuidence(**user_data)\n    res = ai_processor.provide_guidence_process(\n        user_data=user_pass_data, parser=parser)\n    ch.basic_publish(exchange='',\n                     routing_key=\"ai_response\",\n                     body=json.dumps(res),",
+        "detail": "main",
+        "documentation": {}
+    }
+]

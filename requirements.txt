@@ -1,6 +1,6 @@
-# fastapi
-# uvicorn
-
+fastapi
+uvicorn
+websockets 
 #rabbitmq
 pika
 
@@ -15,6 +15,3 @@ pypdf
 
 #
 asyncio
-
-#mongodb client
-motor
