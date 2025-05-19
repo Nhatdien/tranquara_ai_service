@@ -44,7 +44,7 @@ async def lifespan(app: FastAPI):
     consumer_task = asyncio.create_task(start_rabbitmq_consumer())
     print("RabbitMQ consumer started")
 
-    yield  # App is now running
+    yield
 
     # Shutdown logic (optional)
     consumer_task.cancel()
@@ -60,26 +60,27 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-connected_websockets: List[WebSocket] = []
+connected_websockets: dict[str, WebSocket] = {}
 
 # --- WebSocket Route ---
 
 
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
+@app.websocket("/ws/{user_uuid}")
+async def websocket_endpoint(websocket: WebSocket, user_uuid: str):
+    ai_processor = AIProcessor()
     await websocket.accept()
-    connected_websockets.append(websocket)
+    connected_websockets[user_uuid] = websocket
     try:
         while True:
             # Can be replaced with actual chat triggers
             data = await websocket.receive_text()
-            await websocket.send_text(f"Message text was: {data}")
+            # print(ai_processor.response_chat(data))
+            await connected_websockets[user_uuid].send_text(ai_processor.response_chat(data))
     except WebSocketDisconnect:
-        connected_websockets.remove(websocket)
+        del connected_websockets[user_uuid]
         print("WebSocket disconnected")
 
 
-# --- RabbitMQ Callback Handler ---
 def rabbitmq_callback(ch, method, properties, body):
     ai_processor = AIProcessor()
     parser = JsonOutputParser(pydantic_object=AIGuidanceResponse)
@@ -99,11 +100,10 @@ def rabbitmq_callback(ch, method, properties, body):
     print("AI result:", res)
 
     # Push to all connected clients
-    for ws in connected_websockets:
-        asyncio.create_task(ws.send_text(json.dumps(res)))  # async-safe call
+    asyncio.create_task(connected_websockets[user_data.uuid].send_text(
+        json.dumps(res)))  # async-safe call
 
 
-# --- Launch App with Uvicorn ---
 if __name__ == "__main__":
     try:
         uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=False)

@@ -8,6 +8,7 @@ pika
 langchain
 langchain-community
 langchain-openai
+langgraph
 faiss-cpu
 
 #pdf loader
