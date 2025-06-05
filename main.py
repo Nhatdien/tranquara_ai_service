@@ -10,6 +10,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from service.rabbitmq import RabbitMQ
+from service.ai_service_processor import ai_processor
 from service.ai_service_processor import AIProcessor
 from langchain_core.output_parsers import JsonOutputParser
 from models.user import UserDataForGuidence, AIGuidanceResponse
@@ -21,7 +22,7 @@ dotenv.load_dotenv()
 async def start_rabbitmq_consumer():
     rabbitmq = RabbitMQ()
     rabbitmq.channel.queue_declare("ai_tasks")
-    rabbitmq.channel.queue_declare("ai_response")
+    rabbitmq.channel.queue_declare("sync_data")
 
     loop = asyncio.get_event_loop()
 
@@ -67,7 +68,6 @@ connected_websockets: dict[str, WebSocket] = {}
 
 @app.websocket("/ws/{user_uuid}")
 async def websocket_endpoint(websocket: WebSocket, user_uuid: str):
-    ai_processor = AIProcessor()
     await websocket.accept()
     connected_websockets[user_uuid] = websocket
     try:
@@ -82,7 +82,6 @@ async def websocket_endpoint(websocket: WebSocket, user_uuid: str):
 
 
 def rabbitmq_callback(ch, method, properties, body):
-    ai_processor = AIProcessor()
     parser = JsonOutputParser(pydantic_object=AIGuidanceResponse)
 
     user_data = json.loads(body)
@@ -92,7 +91,7 @@ def rabbitmq_callback(ch, method, properties, body):
 
     ch.basic_publish(
         exchange='',
-        routing_key="ai_response",
+        routing_key="ai_tasks",
         body=json.dumps(res),
         properties=pika.BasicProperties(delivery_mode=2)
     )

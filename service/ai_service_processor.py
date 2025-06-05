@@ -103,11 +103,8 @@ class AIProcessor():
 
     # Define the function that calls the model
     def call_model(self, state: MessagesState):
-        system_prompt = (
-            "You are a helpful assistant. "
-            "Answer all questions to the best of your ability. "
-            "The provided chat history includes a summary of the earlier conversation."
-        )
+        file = open("/app/service/system_prompt.md", "r")
+        system_prompt = file.read()
         system_message = SystemMessage(content=system_prompt)
         # exclude the most recent user input
         message_history = state["messages"][:-1]
@@ -147,3 +144,6 @@ class AIProcessor():
             "messages": HumanMessage(content=user_input)
         },
             config={"configurable": {"thread_id": "4"}},)["messages"][-1].content
+
+
+ai_processor = AIProcessor()

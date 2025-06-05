@@ -3,3 +3,5 @@ venv
 config.py
 *.pdf
 faiss_index
+
+service/system_prompt.md
