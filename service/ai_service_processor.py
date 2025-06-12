@@ -8,9 +8,11 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 from langgraph.graph import START, MessagesState, StateGraph
+from langgraph.prebuilt import ToolNode
 from langgraph.checkpoint.memory import MemorySaver
 from config import AI_SERVICE_CONFIG as cfg
 from models.user import UserDataForGuidence
+from service.ai_tools import *
 
 # Load environment variables
 load_dotenv()
@@ -22,9 +24,11 @@ FAISS_INDEX_PATH = "faiss_index"
 class AIProcessor():
     def __init__(self):
         self.model = ChatOpenAI(
-            api_key=os.environ['OPENAI_API_KEY'], model="gpt-4o-mini", streaming=True)
+            api_key=os.environ['OPENAI_API_KEY'], model="gpt-4o-mini", streaming=True).bind_tools(
+            tools=[create_journal, get_emotion_data, change_user_emotion_theme], tool_choice="auto")
         self.vector_store = self.load_or_create_faiss_index()
         self.retriever = self.vector_store.as_retriever()
+
         self.workflow = StateGraph(state_schema=MessagesState)
         self.workflow.add_node("model", self.call_model)
         self.workflow.add_edge(START, "model")
@@ -32,57 +36,7 @@ class AIProcessor():
         memory = MemorySaver()
         self.app = self.workflow.compile(checkpointer=memory)
 
-    def provide_guidence_process(self, user_data: UserDataForGuidence, parser: JsonOutputParser):
-        prompt_text = '''
-            You are an AI-powered mindfulness chatbot. The user follows a **structured 8-week mindfulness program**.
-            With context: {context}
-
-            Current user week: {current_week}
-            Recent Chatbot Queries: {chatbot_interaction}
-
-            Emotion Tracking: {emotion_tracking}
-
-            Your task:
-
-            1. Analyze their mood trends and chatbot queries.
-            2. Suggest a mindfulness tip that aligns with their **current structured program week**.
-
-            Output format:
-            {format_instruction}
-         '''
-        prompt = PromptTemplate(
-            template=prompt_text,
-            input_variables=[
-                "current_week", "chatbot_interaction", "emotion_tracking", "context"],
-            partial_variables={
-                "format_instruction": parser.get_format_instructions()}
-        )
-
-        user_data = user_data.__dict__
-        query = f"Mindfulness guidance for Week {user_data['current_week']} related to {user_data['chatbot_interaction']}"
-        retrieved_docs = self.retriever.invoke(input=query)
-
-        context_text = "\n".join(
-            [page.page_content for page in retrieved_docs])
-        # Define Chain for Processing
-        chain = (
-            prompt
-            | self.model
-            | parser
-        )
-
-        # Invoke Chain
-        res = chain.invoke({
-            "context": context_text,
-            "current_week": user_data["current_week"],
-            "chatbot_interaction": user_data["chatbot_interaction"],
-            "emotion_tracking": user_data["emotion_tracking"]
-        })
-
-        return res
-
     def load_or_create_faiss_index(self):
-
         if os.path.exists(FAISS_INDEX_PATH):
             print("✅ FAISS index found. Loading from disk...")
             vector_store = FAISS.load_local(
@@ -103,7 +57,7 @@ class AIProcessor():
 
     # Define the function that calls the model
     def call_model(self, state: MessagesState):
-        file = open("/app/service/system_prompt.md", "r")
+        file = open("/app/service/test_system_prompt.md", "r")
         system_prompt = file.read()
         system_message = SystemMessage(content=system_prompt)
         # exclude the most recent user input
@@ -143,7 +97,4 @@ class AIProcessor():
         return self.app.invoke({
             "messages": HumanMessage(content=user_input)
         },
-            config={"configurable": {"thread_id": "4"}},)["messages"][-1].content
-
-
-ai_processor = AIProcessor()
+            config={"configurable": {"thread_id": "4"}},)["messages"][-1]

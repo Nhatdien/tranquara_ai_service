@@ -10,26 +10,27 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from service.rabbitmq import RabbitMQ
-from service.ai_service_processor import ai_processor
 from service.ai_service_processor import AIProcessor
 from langchain_core.output_parsers import JsonOutputParser
 from models.user import UserDataForGuidence, AIGuidanceResponse
+from service.rabbitmq import rabbitmq_conn
+
 
 dotenv.load_dotenv()
 
 
 # --- RabbitMQ Consumer Task ---
 async def start_rabbitmq_consumer():
-    rabbitmq = RabbitMQ()
-    rabbitmq.channel.queue_declare("ai_tasks")
-    rabbitmq.channel.queue_declare("sync_data")
+    rabbitmq_conn.channel.queue_declare("ai_tasks")
+    rabbitmq_conn.channel.queue_declare("sync_data")
 
     loop = asyncio.get_event_loop()
 
     def run():
         try:
             print("Starting RabbitMQ consumer...")
-            rabbitmq.consume(queue_name='ai_tasks', callback=rabbitmq_callback)
+            rabbitmq_conn.consume(queue_name='ai_tasks',
+                                  callback=rabbitmq_callback)
         except Exception as e:
             print("RabbitMQ error:", e)
             sys.exit(1)
@@ -70,37 +71,26 @@ connected_websockets: dict[str, WebSocket] = {}
 async def websocket_endpoint(websocket: WebSocket, user_uuid: str):
     await websocket.accept()
     connected_websockets[user_uuid] = websocket
+    ai_processor = AIProcessor()
     try:
         while True:
             # Can be replaced with actual chat triggers
             data = await websocket.receive_text()
-            # print(ai_processor.response_chat(data))
-            await connected_websockets[user_uuid].send_text(ai_processor.response_chat(data))
+            response = ai_processor.response_chat(data)
+            print(response)
+            await connected_websockets[user_uuid].send_text(response.content)
     except WebSocketDisconnect:
         del connected_websockets[user_uuid]
         print("WebSocket disconnected")
 
 
 def rabbitmq_callback(ch, method, properties, body):
-    parser = JsonOutputParser(pydantic_object=AIGuidanceResponse)
-
     user_data = json.loads(body)
-    user_pass_data = UserDataForGuidence(**user_data)
-    res = ai_processor.provide_guidence_process(
-        user_data=user_pass_data, parser=parser)
-
-    ch.basic_publish(
-        exchange='',
-        routing_key="ai_tasks",
-        body=json.dumps(res),
-        properties=pika.BasicProperties(delivery_mode=2)
-    )
-
-    print("AI result:", res)
+    res = f"Received message: {user_data}"
 
     # Push to all connected clients
     asyncio.create_task(connected_websockets[user_data.uuid].send_text(
-        json.dumps(res)))  # async-safe call
+        res))  # async-safe call
 
 
 if __name__ == "__main__":
