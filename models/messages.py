@@ -5,9 +5,9 @@ from datetime import datetime
 T = TypeVar("T")
 
 
-class SyncDataMessage(Generic[T], BaseModel):
+class SyncDataMessage(BaseModel, Generic[T]):
     event: str
-    timestamp: datetime.datetime = datetime.now()
+    timestamp: datetime = datetime.now()
     payload: T
 
 

@@ -8,7 +8,7 @@ from models.messages import *
 
 
 @tool("create_journal", parse_docstring=True)
-def create_journal(title: str, content: str):
+def create_journal(user_id: str, title: str, content: str):
     """
     Summarise the current conversation after user have sharing their current mental state and notify the user after the journal created
 
@@ -19,7 +19,7 @@ def create_journal(title: str, content: str):
     Example:
         User saying they're feeling stress, you ask some gental following question before call this tool. 
     """
-    journal = UserJournal(title, content)
+    journal = SyncJournalPayload(user_id, title, content)
     payload = SyncDataMessage[SyncJournalPayload](
         event="user_journal.create", payload=journal)
 

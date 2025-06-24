@@ -9,10 +9,11 @@ langchain
 langchain-community
 langchain-openai
 langgraph
-faiss-cpu
-
+langchain-qdrant
 #pdf loader
 pypdf
 
+#qdrant client
+qdrant_client
 #
 asyncio

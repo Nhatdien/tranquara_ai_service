@@ -3,6 +3,9 @@ services:
     build: 
       context: .
       dockerfile: ./Dockerfile.yml
+
+    env_file: ".env"
+   
     ports: 
       - "8000:8000"
     networks:
@@ -26,6 +29,16 @@ services:
       interval: 15s
       timeout: 20s
       retries: 4
+  qdrant:
+    container_name: qdrant_local
+    image: qdrant/qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    networks:
+      - tranquara-network
+    volumes:
+      - ./data/qdrant_storage:/qdrant/storage
 networks:
   tranquara-network:
     external: true
