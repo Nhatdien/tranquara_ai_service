@@ -7,21 +7,26 @@ from langgraph.graph import START, MessagesState, StateGraph
 from langgraph.checkpoint.memory import MemorySaver
 from database.vector_database import qdrant
 from service.ai_tools import *
-
+from models.user import UserInformations
 # Load environment variables
 load_dotenv()
 
-# Create Vector Store (FAISS)
-FAISS_INDEX_PATH = "faiss_index"
-
 
 class AIProcessor():
-    def __init__(self, user_id: str):
+    def __init__(self, user_info: UserInformations):
         self.model = ChatOpenAI(
             api_key=os.environ['OPENAI_API_KEY'], model="gpt-4o-mini", streaming=True).bind_tools(
             tools=[create_journal, get_emotion_data, change_user_emotion_theme], tool_choice="auto")
         self.vector_store = qdrant
 
+        # Settinng up system message
+        self.user_info = user_info
+        with open("/app/service/test_system_prompt.md", "r") as file:
+            self.system_prompt_temmplate = file.read()
+
+        self.system_prompt_temmplate.format(**self.user_info)
+
+        # Setting up LangGrapth nodes
         self.workflow = StateGraph(state_schema=MessagesState)
         self.workflow.add_node("model", self.call_model)
         self.workflow.add_edge(START, "model")
@@ -32,9 +37,7 @@ class AIProcessor():
     # Define the function that calls the model
 
     def call_model(self, state: MessagesState):
-        file = open("/app/service/test_system_prompt.md", "r")
-        system_prompt = file.read()
-        system_message = SystemMessage(content=system_prompt)
+        system_message = SystemMessage(content=self.system_prompt_temmplate)
         # exclude the most recent user input
         message_history = state["messages"][:-1]
         # Summarize the messages if the chat history reaches a certain size
@@ -71,6 +74,8 @@ class AIProcessor():
         return {"messages": self.chat_history}
 
     def response_chat(self, user_input: str):
+        # perform retrival query to qdrant
+
         return self.app.invoke({
             "messages": HumanMessage(content=user_input)
         },

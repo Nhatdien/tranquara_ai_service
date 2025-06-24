@@ -71,13 +71,18 @@ connected_websockets: dict[str, WebSocket] = {}
 async def websocket_endpoint(websocket: WebSocket, user_uuid: str):
     await websocket.accept()
     connected_websockets[user_uuid] = websocket
-    ai_processor = AIProcessor(user_id=user_uuid)
+
     try:
         while True:
             # Can be replaced with actual chat triggers
+
             data = await websocket.receive_text()
 
-            # Publish the message to broker
+            # Verify the token user sent when open the connection
+
+            # Get user information from cache or the http request to Golang service
+
+            ai_processor = AIProcessor(user_info=user_uuid)
 
             # Response with the model
             response = ai_processor.response_chat(data)
