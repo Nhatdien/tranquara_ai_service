@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 from langchain_openai.chat_models import ChatOpenAI
 from langchain_core.messages import AIMessage, SystemMessage, HumanMessage, RemoveMessage
 from langchain_community.vectorstores import FAISS
-from langgraph.graph import START, MessagesState, StateGraph
+from langgraph.graph import START, END, MessagesState, StateGraph
+from langgraph.prebuilt import ToolNode, tools_condition
 from langgraph.checkpoint.memory import MemorySaver
 from database.vector_database import qdrant
 from service.ai_tools import *
@@ -13,23 +14,33 @@ load_dotenv()
 
 
 class AIProcessor():
-    def __init__(self, user_info: UserInformations):
+    def __init__(self):
+        self.tools = [create_journal, get_emotion_data,
+                      change_user_emotion_theme]
         self.model = ChatOpenAI(
             api_key=os.environ['OPENAI_API_KEY'], model="gpt-4o-mini", streaming=True).bind_tools(
-            tools=[create_journal, get_emotion_data, change_user_emotion_theme], tool_choice="auto")
+            tools=self.tools, tool_choice="auto")
         self.vector_store = qdrant
 
         # Settinng up system message
-        self.user_info = user_info
+        # self.user_info = user_info
         with open("/app/service/test_system_prompt.md", "r") as file:
             self.system_prompt_temmplate = file.read()
 
-        self.system_prompt_temmplate.format(**self.user_info)
+        # self.system_prompt_temmplate.format(**self.user_info)
 
         # Setting up LangGrapth nodes
         self.workflow = StateGraph(state_schema=MessagesState)
+
+        # create model node and tool node
         self.workflow.add_node("model", self.call_model)
+        # self.workflow.add_node("tool", ToolNode(tools=self.tools))
+
+        # create edges
+        # self.workflow.add_edge("tool", "model")
         self.workflow.add_edge(START, "model")
+        # self.workflow.add_conditional_edges("model", tools_condition)
+        self.workflow.add_edge("model", END)
         self.chat_history = []
         memory = MemorySaver()
         self.app = self.workflow.compile(checkpointer=memory)
@@ -41,7 +52,8 @@ class AIProcessor():
         # exclude the most recent user input
         message_history = state["messages"][:-1]
         # Summarize the messages if the chat history reaches a certain size
-        if len(message_history) >= 5:
+        print(message_history)
+        if len(message_history) >= 4:
             print("generating summary")
             last_human_message = state["messages"][-1]
             # Invoke the model to generate conversation summary
@@ -77,6 +89,6 @@ class AIProcessor():
         # perform retrival query to qdrant
 
         return self.app.invoke({
-            "messages": HumanMessage(content=user_input)
+            "messages": [HumanMessage(content=user_input)]
         },
             config={"configurable": {"thread_id": "4"}},)["messages"][-1]

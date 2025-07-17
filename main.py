@@ -12,8 +12,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from service.rabbitmq import RabbitMQ
 from service.ai_service_processor import AIProcessor
 from langchain_core.output_parsers import JsonOutputParser
-from models.user import UserDataForGuidence, AIGuidanceResponse
 from service.rabbitmq import rabbitmq_conn
+from models.messages import SyncDataMessage, SyncChatlogPayload
 
 
 dotenv.load_dotenv()
@@ -71,23 +71,29 @@ connected_websockets: dict[str, WebSocket] = {}
 async def websocket_endpoint(websocket: WebSocket, user_uuid: str):
     await websocket.accept()
     connected_websockets[user_uuid] = websocket
-
+    rabbitmq_ins = RabbitMQ()
     try:
         while True:
             # Can be replaced with actual chat triggers
 
             data = await websocket.receive_text()
-
             # Verify the token user sent when open the connection
 
             # Get user information from cache or the http request to Golang service
-
-            ai_processor = AIProcessor(user_info=user_uuid)
+            ai_processor = AIProcessor()
 
             # Response with the model
             response = ai_processor.response_chat(data)
             print(response)
             await connected_websockets[user_uuid].send_text(response.content)
+
+            for chat_message in [[data, "user"], [response.content, "bot"]]:
+                chatlog = SyncChatlogPayload(
+                    user_id=user_uuid, sender_type=chat_message[1], message=chat_message[0])
+                message = SyncDataMessage[SyncChatlogPayload](
+                    event="chatlog.create", payload=chatlog).model_dump_json()
+                rabbitmq_ins.publish("sync_data", message)
+
     except WebSocketDisconnect:
         del connected_websockets[user_uuid]
         print("WebSocket disconnected")

@@ -1,5 +1,5 @@
 from typing import Generic, TypeVar
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime
 
 T = TypeVar("T")
@@ -7,7 +7,7 @@ T = TypeVar("T")
 
 class SyncDataMessage(BaseModel, Generic[T]):
     event: str
-    timestamp: datetime = datetime.now()
+    timestamp: str = Field(default=datetime.now().isoformat())
     payload: T
 
 
