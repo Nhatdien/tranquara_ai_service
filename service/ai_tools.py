@@ -60,17 +60,18 @@ def create_journal(user_id: str, title: str, content: str):
     Summarise the current conversation after user have sharing their current mental state and notify the user after the journal created
 
     Args:
+        user_id (str): user_id in uuid format
         title (str): title of the journal
         content (str): content of the journal
 
     Example:
         User saying they're feeling stress, you ask some gental following question before call this tool. 
     """
-    journal = SyncJournalPayload(user_id, title, content)
+    journal = SyncJournalPayload(user_id=user_id, title=title, content=content)
     payload = SyncDataMessage[SyncJournalPayload](
         event="user_journal.create", payload=journal)
 
-    rabbitmq_conn.publish("sync_data", json.dumps(payload))
+    rabbitmq_conn.publish("sync_data", payload.model_dump_json())
     return "Journal created"
 
 

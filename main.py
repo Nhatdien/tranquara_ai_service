@@ -12,8 +12,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from service.rabbitmq import RabbitMQ
 from service.ai_service_processor import AIProcessor
 from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.documents import Document
 from service.rabbitmq import rabbitmq_conn
 from models.messages import SyncDataMessage, SyncChatlogPayload
+from database.vector_database import QdrantClient
+from datetime import datetime
+from uuid import uuid4
 
 
 dotenv.load_dotenv()
@@ -72,6 +76,7 @@ async def websocket_endpoint(websocket: WebSocket, user_uuid: str):
     await websocket.accept()
     connected_websockets[user_uuid] = websocket
     rabbitmq_ins = RabbitMQ()
+    ai_processor = AIProcessor()
     try:
         while True:
             # Can be replaced with actual chat triggers
@@ -80,19 +85,32 @@ async def websocket_endpoint(websocket: WebSocket, user_uuid: str):
             # Verify the token user sent when open the connection
 
             # Get user information from cache or the http request to Golang service
-            ai_processor = AIProcessor()
 
             # Response with the model
             response = ai_processor.response_chat(data)
             print(response)
             await connected_websockets[user_uuid].send_text(response.content)
 
+            # sync data with Golang service
             for chat_message in [[data, "user"], [response.content, "bot"]]:
                 chatlog = SyncChatlogPayload(
                     user_id=user_uuid, sender_type=chat_message[1], message=chat_message[0])
                 message = SyncDataMessage[SyncChatlogPayload](
                     event="chatlog.create", payload=chatlog).model_dump_json()
                 rabbitmq_ins.publish("sync_data", message)
+
+            # Save to vector store
+            documents_add = [Document(page_content=data, metadata={
+                "type": "chatlog",
+                "created_at": datetime.now().timestamp(),
+                "sender_type": "user"
+            }), Document(page_content=response.content, metadata={
+                "type": "chatlog",
+                "created_at": datetime.now().timestamp(),
+                "sender_type": "bot"
+            })]
+            ai_processor.vector_store.add_documents(
+                documents=documents_add, ids=[str(uuid4()) for _ in documents_add])
 
     except WebSocketDisconnect:
         del connected_websockets[user_uuid]
