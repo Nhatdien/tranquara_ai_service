@@ -1,4 +1,4 @@
-from service.rabbitmq import rabbitmq_conn
+from service.rabbitmq import RabbitMQ
 from langchain_core.tools import tool
 from models.journal import UserJournal
 from models.emotion_log import EmotionLog
@@ -56,9 +56,10 @@ def route_tools(
 
 @tool("create_journal", parse_docstring=True)
 def create_journal(user_id: str, title: str, content: str):
+    rabbitmq_conn = RabbitMQ()
     """
-    Summarise the current conversation after user have sharing their current mental state and notify the user after the journal created
-
+    Summarise the current conversation after user have sharing their current mental state and notify the user after the journal created. Write the journal
+    with user perspective
     Args:
         user_id (str): user_id in uuid format
         title (str): title of the journal
