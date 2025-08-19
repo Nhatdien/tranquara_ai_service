@@ -54,7 +54,7 @@ def route_tools(
     return END
 
 
-@tool("create_journal", parse_docstring=True)
+@tool("create_journal")
 def create_journal(user_id: str, title: str, content: str):
     rabbitmq_conn = RabbitMQ()
     """

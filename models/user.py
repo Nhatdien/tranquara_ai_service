@@ -5,11 +5,10 @@ from typing import Dict, Optional, Any
 class UserInformation(BaseModel):
     kyc_answers: Optional[Dict[str, Any]]
     name: Optional[str]
-    age: Optional[int]
+    age_range: Optional[str]
     gender: Optional[str]
 
 
-class UserInformations(BaseModel):
+class UserInformations(UserInformation):
     user_id: str
-    user_information: UserInformation
-    user_setting: Optional[Dict[str, Any]]
+    user_setting: Optional[Dict[str, Any]] = None
