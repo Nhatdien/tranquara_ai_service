@@ -40,5 +40,6 @@ class TemplateData(BaseModel):
 
 
 class InitConnectData(BaseModel):
+    journal_id: str
     template_data: TemplateData
     user_info: UserInformations

@@ -80,7 +80,6 @@ async def websocket_endpoint(websocket: WebSocket, user_uuid: str):
     initial_message = await websocket.receive_text()
     init_metadata = InitConnectData.model_validate_json(initial_message)
     ai_processor = AIProcessor(init_metadata)
-    journal_id = str(uuid4())
     try:
         while True:
             # Can be replaced with actual chat triggers
@@ -90,13 +89,15 @@ async def websocket_endpoint(websocket: WebSocket, user_uuid: str):
 
             # Response with the model
             response = ai_processor.response_chat(data)
-            print(response)
-            await connected_websockets[user_uuid].send_text(response.content)
+            response_message = {
+                "content": response.content,
+            }
+            await connected_websockets[user_uuid].send_text(json.dumps(response_message))
 
             # sync data with Golang service
             for chat_message in [[data, "user"], [response.content, "bot"]]:
                 chatlog = SyncChatlogPayload(
-                    user_id=user_uuid, sender_type=chat_message[1], message=chat_message[0], journal_id=journal_id)
+                    user_id=user_uuid, sender_type=chat_message[1], message=chat_message[0], journal_id=init_metadata.journal_id)
                 message = SyncDataMessage[SyncChatlogPayload](
                     event="chatlog.create", payload=chatlog).model_dump_json()
                 rabbitmq_ins.publish("sync_data", message)
