@@ -14,7 +14,7 @@ from service.ai_service_processor import AIProcessor
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.documents import Document
 from service.rabbitmq import rabbitmq_conn
-from models.messages import SyncDataMessage, SyncChatlogPayload, InitConnectData
+from models.messages import SyncDataMessage, SyncChatlogPayload, InitConnectData, UserMessagePayload
 from database.vector_database import QdrantClient
 from datetime import datetime
 from uuid import uuid4
@@ -85,10 +85,11 @@ async def websocket_endpoint(websocket: WebSocket, user_uuid: str):
             # Can be replaced with actual chat triggers
 
             data = await websocket.receive_text()
-            # Check if it's a initial event message
+            # Decode the user message
+            user_input = UserMessagePayload.model_validate_json(data)
 
             # Response with the model
-            response = ai_processor.response_chat(data)
+            response = ai_processor.response_chat(user_input)
             response_message = {
                 "content": response.content,
             }
@@ -97,7 +98,7 @@ async def websocket_endpoint(websocket: WebSocket, user_uuid: str):
             # sync data with Golang service
             for chat_message in [[data, "user"], [response.content, "bot"]]:
                 chatlog = SyncChatlogPayload(
-                    user_id=user_uuid, sender_type=chat_message[1], message=chat_message[0], journal_id=init_metadata.journal_id)
+                    user_id=user_uuid, sender_type=chat_message[1], message=chat_message[0], journal_id=user_input.journal_id)
                 message = SyncDataMessage[SyncChatlogPayload](
                     event="chatlog.create", payload=chatlog).model_dump_json()
                 rabbitmq_ins.publish("sync_data", message)

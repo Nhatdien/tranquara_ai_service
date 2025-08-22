@@ -34,12 +34,17 @@ class SyncEmotionLog(BaseModel):
 
 # WS connection initial message data
 class TemplateData(BaseModel):
-    content: str
+    content: list[str]
     title: str
     category: str
 
 
 class InitConnectData(BaseModel):
-    journal_id: str
     template_data: TemplateData
     user_info: UserInformations
+
+
+class UserMessagePayload(BaseModel):
+    journal_id: str
+    content: str
+    current_journal: str

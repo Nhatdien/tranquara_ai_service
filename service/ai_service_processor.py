@@ -10,7 +10,7 @@ from langgraph.graph import START, END, MessagesState, StateGraph
 from langgraph.checkpoint.memory import MemorySaver, PersistentDict
 from database.vector_database import qdrant
 # from service.ai_tools import *
-from models.messages import InitConnectData
+from models.messages import InitConnectData, UserMessagePayload
 # Load environment variables
 load_dotenv()
 
@@ -25,6 +25,7 @@ class AIProcessor():
         #     tools=self.tools, tool_choice="auto")
         self.vector_store = qdrant
         self.init_metadata = init_metadata
+        self.currentContext = ""
 
         # Setting up LangGrapth nodes
         self.workflow = StateGraph(state_schema=MessagesState)
@@ -45,12 +46,12 @@ class AIProcessor():
     # Define the function that calls the model
 
     def call_model(self, state: MessagesState):
-        relevant_context = self.vector_store.similarity_search(
-            query=state["messages"][-1].content, k=8, score_threshold=0.75)
-        print(
-            "\n".join([context.page_content for context in relevant_context]))
+        # relevant_context = self.vector_store.similarity_search(
+        #     query=state["messages"][-1].content, k=8, score_threshold=0.75)
+        # print(
+        #     "\n".join([context.page_content for context in relevant_context]))
         system_message = SystemMessage(content=format_system_prompt(
-            init_data=self.init_metadata, context="\n".join([context.page_content for context in relevant_context])))
+            init_data=self.init_metadata, context=self.currentContext))
         message_history = state["messages"][:-1]
         # Summarize the messages if the chat history reaches a certain size
         print(message_history)
@@ -86,10 +87,11 @@ class AIProcessor():
 
         return {"messages": self.chat_history}
 
-    def response_chat(self, user_input: str):
+    def response_chat(self, user_input: UserMessagePayload):
         # perform retrival query to qdrant
+        self.currentContext = user_input.current_journal
 
         return self.app.invoke({
-            "messages": HumanMessage(content=user_input)
+            "messages": HumanMessage(content=user_input.content)
         },
             config={"configurable": {"thread_id": "4"}},)["messages"][-1]
