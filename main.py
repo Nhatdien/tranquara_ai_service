@@ -18,6 +18,7 @@ from models.messages import SyncDataMessage, SyncChatlogPayload, InitConnectData
 from database.vector_database import QdrantClient
 from datetime import datetime
 from uuid import uuid4
+from router.analyze import router as analyze_router
 
 
 dotenv.load_dotenv()
@@ -57,6 +58,9 @@ async def lifespan(app: FastAPI):
     print("Shutting down RabbitMQ consumer")
 
 app = FastAPI(lifespan=lifespan)
+
+# Register routers
+app.include_router(analyze_router)
 
 # Allow all origins
 app.add_middleware(

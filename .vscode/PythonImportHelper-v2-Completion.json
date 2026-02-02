@@ -1,11 +1,42 @@
 [
     {
-        "label": "motor.motor_asyncio",
-        "kind": 6,
+        "label": "QdrantClient",
+        "importPath": "qdrant_client",
+        "description": "qdrant_client",
         "isExtraImport": true,
-        "importPath": "motor.motor_asyncio",
-        "description": "motor.motor_asyncio",
-        "detail": "motor.motor_asyncio",
+        "detail": "qdrant_client",
+        "documentation": {}
+    },
+    {
+        "label": "Distance",
+        "importPath": "qdrant_client.models",
+        "description": "qdrant_client.models",
+        "isExtraImport": true,
+        "detail": "qdrant_client.models",
+        "documentation": {}
+    },
+    {
+        "label": "VectorParams",
+        "importPath": "qdrant_client.models",
+        "description": "qdrant_client.models",
+        "isExtraImport": true,
+        "detail": "qdrant_client.models",
+        "documentation": {}
+    },
+    {
+        "label": "QdrantVectorStore",
+        "importPath": "langchain_qdrant",
+        "description": "langchain_qdrant",
+        "isExtraImport": true,
+        "detail": "langchain_qdrant",
+        "documentation": {}
+    },
+    {
+        "label": "OpenAIEmbeddings",
+        "importPath": "langchain_openai",
+        "description": "langchain_openai",
+        "isExtraImport": true,
+        "detail": "langchain_openai",
         "documentation": {}
     },
     {
@@ -22,6 +53,191 @@
         "description": "pydantic",
         "isExtraImport": true,
         "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "PydanticOutputParser",
+        "importPath": "langchain_core.output_parsers",
+        "description": "langchain_core.output_parsers",
+        "isExtraImport": true,
+        "detail": "langchain_core.output_parsers",
+        "documentation": {}
+    },
+    {
+        "label": "JsonOutputParser",
+        "importPath": "langchain_core.output_parsers",
+        "description": "langchain_core.output_parsers",
+        "isExtraImport": true,
+        "detail": "langchain_core.output_parsers",
+        "documentation": {}
+    },
+    {
+        "label": "PromptTemplate",
+        "importPath": "langchain_core.prompts",
+        "description": "langchain_core.prompts",
+        "isExtraImport": true,
+        "detail": "langchain_core.prompts",
+        "documentation": {}
+    },
+    {
+        "label": "Generic",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TypeVar",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "datetime",
+        "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "UserInformations",
+        "importPath": "models.user",
+        "description": "models.user",
+        "isExtraImport": true,
+        "detail": "models.user",
+        "documentation": {}
+    },
+    {
+        "label": "UserInformations",
+        "importPath": "models.user",
+        "description": "models.user",
+        "isExtraImport": true,
+        "detail": "models.user",
         "documentation": {}
     },
     {
@@ -51,6 +267,30 @@
         "documentation": {}
     },
     {
+        "label": "uuid4",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "uuid4",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "format_system_prompt",
+        "importPath": "service.helper",
+        "description": "service.helper",
+        "isExtraImport": true,
+        "detail": "service.helper",
+        "documentation": {}
+    },
+    {
         "label": "ChatOpenAI",
         "importPath": "langchain_openai.chat_models",
         "description": "langchain_openai.chat_models",
@@ -59,35 +299,59 @@
         "documentation": {}
     },
     {
-        "label": "PromptTemplate",
-        "importPath": "langchain_core.prompts",
-        "description": "langchain_core.prompts",
+        "label": "Document",
+        "importPath": "langchain_core.documents",
+        "description": "langchain_core.documents",
         "isExtraImport": true,
-        "detail": "langchain_core.prompts",
+        "detail": "langchain_core.documents",
         "documentation": {}
     },
     {
-        "label": "JsonOutputParser",
-        "importPath": "langchain_core.output_parsers",
-        "description": "langchain_core.output_parsers",
+        "label": "Document",
+        "importPath": "langchain_core.documents",
+        "description": "langchain_core.documents",
         "isExtraImport": true,
-        "detail": "langchain_core.output_parsers",
+        "detail": "langchain_core.documents",
         "documentation": {}
     },
     {
-        "label": "JsonOutputParser",
-        "importPath": "langchain_core.output_parsers",
-        "description": "langchain_core.output_parsers",
+        "label": "AIMessage",
+        "importPath": "langchain_core.messages",
+        "description": "langchain_core.messages",
         "isExtraImport": true,
-        "detail": "langchain_core.output_parsers",
+        "detail": "langchain_core.messages",
         "documentation": {}
     },
     {
-        "label": "PyPDFLoader",
-        "importPath": "langchain_community.document_loaders",
-        "description": "langchain_community.document_loaders",
+        "label": "SystemMessage",
+        "importPath": "langchain_core.messages",
+        "description": "langchain_core.messages",
         "isExtraImport": true,
-        "detail": "langchain_community.document_loaders",
+        "detail": "langchain_core.messages",
+        "documentation": {}
+    },
+    {
+        "label": "HumanMessage",
+        "importPath": "langchain_core.messages",
+        "description": "langchain_core.messages",
+        "isExtraImport": true,
+        "detail": "langchain_core.messages",
+        "documentation": {}
+    },
+    {
+        "label": "RemoveMessage",
+        "importPath": "langchain_core.messages",
+        "description": "langchain_core.messages",
+        "isExtraImport": true,
+        "detail": "langchain_core.messages",
+        "documentation": {}
+    },
+    {
+        "label": "ToolMessage",
+        "importPath": "langchain_core.messages",
+        "description": "langchain_core.messages",
+        "isExtraImport": true,
+        "detail": "langchain_core.messages",
         "documentation": {}
     },
     {
@@ -99,43 +363,220 @@
         "documentation": {}
     },
     {
-        "label": "OpenAIEmbeddings",
-        "importPath": "langchain_openai",
-        "description": "langchain_openai",
+        "label": "START",
+        "importPath": "langgraph.graph",
+        "description": "langgraph.graph",
         "isExtraImport": true,
-        "detail": "langchain_openai",
+        "detail": "langgraph.graph",
         "documentation": {}
     },
     {
-        "label": "AI_SERVICE_CONFIG",
-        "importPath": "config",
-        "description": "config",
+        "label": "END",
+        "importPath": "langgraph.graph",
+        "description": "langgraph.graph",
         "isExtraImport": true,
-        "detail": "config",
+        "detail": "langgraph.graph",
         "documentation": {}
     },
     {
-        "label": "UserDataForGuidence",
-        "importPath": "models.user",
-        "description": "models.user",
+        "label": "MessagesState",
+        "importPath": "langgraph.graph",
+        "description": "langgraph.graph",
         "isExtraImport": true,
-        "detail": "models.user",
+        "detail": "langgraph.graph",
         "documentation": {}
     },
     {
-        "label": "UserDataForGuidence",
-        "importPath": "models.user",
-        "description": "models.user",
+        "label": "StateGraph",
+        "importPath": "langgraph.graph",
+        "description": "langgraph.graph",
         "isExtraImport": true,
-        "detail": "models.user",
+        "detail": "langgraph.graph",
         "documentation": {}
     },
     {
-        "label": "AIGuidanceResponse",
-        "importPath": "models.user",
-        "description": "models.user",
+        "label": "START",
+        "importPath": "langgraph.graph",
+        "description": "langgraph.graph",
         "isExtraImport": true,
-        "detail": "models.user",
+        "detail": "langgraph.graph",
+        "documentation": {}
+    },
+    {
+        "label": "END",
+        "importPath": "langgraph.graph",
+        "description": "langgraph.graph",
+        "isExtraImport": true,
+        "detail": "langgraph.graph",
+        "documentation": {}
+    },
+    {
+        "label": "MessagesState",
+        "importPath": "langgraph.graph",
+        "description": "langgraph.graph",
+        "isExtraImport": true,
+        "detail": "langgraph.graph",
+        "documentation": {}
+    },
+    {
+        "label": "StateGraph",
+        "importPath": "langgraph.graph",
+        "description": "langgraph.graph",
+        "isExtraImport": true,
+        "detail": "langgraph.graph",
+        "documentation": {}
+    },
+    {
+        "label": "MemorySaver",
+        "importPath": "langgraph.checkpoint.memory",
+        "description": "langgraph.checkpoint.memory",
+        "isExtraImport": true,
+        "detail": "langgraph.checkpoint.memory",
+        "documentation": {}
+    },
+    {
+        "label": "PersistentDict",
+        "importPath": "langgraph.checkpoint.memory",
+        "description": "langgraph.checkpoint.memory",
+        "isExtraImport": true,
+        "detail": "langgraph.checkpoint.memory",
+        "documentation": {}
+    },
+    {
+        "label": "qdrant",
+        "importPath": "database.vector_database",
+        "description": "database.vector_database",
+        "isExtraImport": true,
+        "detail": "database.vector_database",
+        "documentation": {}
+    },
+    {
+        "label": "QdrantClient",
+        "importPath": "database.vector_database",
+        "description": "database.vector_database",
+        "isExtraImport": true,
+        "detail": "database.vector_database",
+        "documentation": {}
+    },
+    {
+        "label": "InitConnectData",
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "isExtraImport": true,
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "UserMessagePayload",
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "isExtraImport": true,
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "isExtraImport": true,
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "InitConnectData",
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "isExtraImport": true,
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "SyncDataMessage",
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "isExtraImport": true,
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "SyncChatlogPayload",
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "isExtraImport": true,
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "InitConnectData",
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "isExtraImport": true,
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "UserMessagePayload",
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "isExtraImport": true,
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "RabbitMQ",
+        "importPath": "service.rabbitmq",
+        "description": "service.rabbitmq",
+        "isExtraImport": true,
+        "detail": "service.rabbitmq",
+        "documentation": {}
+    },
+    {
+        "label": "RabbitMQ",
+        "importPath": "service.rabbitmq",
+        "description": "service.rabbitmq",
+        "isExtraImport": true,
+        "detail": "service.rabbitmq",
+        "documentation": {}
+    },
+    {
+        "label": "rabbitmq_conn",
+        "importPath": "service.rabbitmq",
+        "description": "service.rabbitmq",
+        "isExtraImport": true,
+        "detail": "service.rabbitmq",
+        "documentation": {}
+    },
+    {
+        "label": "tool",
+        "importPath": "langchain_core.tools",
+        "description": "langchain_core.tools",
+        "isExtraImport": true,
+        "detail": "langchain_core.tools",
+        "documentation": {}
+    },
+    {
+        "label": "UserJournal",
+        "importPath": "models.journal",
+        "description": "models.journal",
+        "isExtraImport": true,
+        "detail": "models.journal",
+        "documentation": {}
+    },
+    {
+        "label": "EmotionLog",
+        "importPath": "models.emotion_log",
+        "description": "models.emotion_log",
+        "isExtraImport": true,
+        "detail": "models.emotion_log",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
         "documentation": {}
     },
     {
@@ -157,27 +598,39 @@
         "documentation": {}
     },
     {
-        "label": "List",
-        "importPath": "typing",
-        "description": "typing",
+        "label": "requests",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "typing",
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
         "documentation": {}
     },
     {
-        "label": "BaseSettings",
-        "importPath": "pydantic_settings",
-        "description": "pydantic_settings",
+        "label": "argparse",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "pydantic_settings",
+        "importPath": "argparse",
+        "description": "argparse",
+        "detail": "argparse",
         "documentation": {}
     },
     {
-        "label": "BaseSettings",
-        "importPath": "pydantic_settings",
-        "description": "pydantic_settings",
+        "label": "glob",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "pydantic_settings",
+        "importPath": "glob",
+        "description": "glob",
+        "detail": "glob",
+        "documentation": {}
+    },
+    {
+        "label": "shutil",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "shutil",
+        "description": "shutil",
+        "detail": "shutil",
         "documentation": {}
     },
     {
@@ -190,12 +643,64 @@
         "documentation": {}
     },
     {
-        "label": "json",
+        "label": "sysconfig",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
+        "importPath": "sysconfig",
+        "description": "sysconfig",
+        "detail": "sysconfig",
+        "documentation": {}
+    },
+    {
+        "label": "tempfile",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tempfile",
+        "description": "tempfile",
+        "detail": "tempfile",
+        "documentation": {}
+    },
+    {
+        "label": "winreg",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "winreg",
+        "description": "winreg",
+        "detail": "winreg",
+        "documentation": {}
+    },
+    {
+        "label": "site",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "site",
+        "description": "site",
+        "detail": "site",
+        "documentation": {}
+    },
+    {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
+        "label": "BaseSettings",
+        "importPath": "pydantic_settings",
+        "description": "pydantic_settings",
+        "isExtraImport": true,
+        "detail": "pydantic_settings",
+        "documentation": {}
+    },
+    {
+        "label": "BaseSettings",
+        "importPath": "pydantic_settings",
+        "description": "pydantic_settings",
+        "isExtraImport": true,
+        "detail": "pydantic_settings",
         "documentation": {}
     },
     {
@@ -208,11 +713,52 @@
         "documentation": {}
     },
     {
-        "label": "RabbitMQ",
-        "importPath": "service.rabbitmq",
-        "description": "service.rabbitmq",
+        "label": "uvicorn",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "service.rabbitmq",
+        "importPath": "uvicorn",
+        "description": "uvicorn",
+        "detail": "uvicorn",
+        "documentation": {}
+    },
+    {
+        "label": "asynccontextmanager",
+        "importPath": "contextlib",
+        "description": "contextlib",
+        "isExtraImport": true,
+        "detail": "contextlib",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "WebSocket",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "WebSocketDisconnect",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "CORSMiddleware",
+        "importPath": "fastapi.middleware.cors",
+        "description": "fastapi.middleware.cors",
+        "isExtraImport": true,
+        "detail": "fastapi.middleware.cors",
         "documentation": {}
     },
     {
@@ -221,41 +767,176 @@
         "description": "service.ai_service_processor",
         "isExtraImport": true,
         "detail": "service.ai_service_processor",
-        "documentation": {}
-    },
-    {
-        "label": "tornado",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "tornado",
-        "description": "tornado",
-        "detail": "tornado",
         "documentation": {}
     },
     {
         "label": "client",
         "kind": 5,
-        "importPath": "database.database",
-        "description": "database.database",
-        "peekOfCode": "client = motor.motor_asyncio.AsyncIOMotorClient(\"mongodb://mongodb:27017\")\n# database = client[\"tranquara_ai_service\"]",
-        "detail": "database.database",
+        "importPath": "database.vector_database",
+        "description": "database.vector_database",
+        "peekOfCode": "client = QdrantClient(host=\"qdrant\", port=6333)\n# Define your collection name and vector settings\ncollection_name = \"my_collection\"\nvector_size = 1536\ndistance_metric = Distance.COSINE\n# Check if collection exists\nif not client.collection_exists(collection_name):\n    print(f\"Creating collection: {collection_name}\")\n    client.recreate_collection(\n        collection_name=collection_name,",
+        "detail": "database.vector_database",
         "documentation": {}
     },
     {
-        "label": "UserDataForGuidence",
+        "label": "collection_name",
+        "kind": 5,
+        "importPath": "database.vector_database",
+        "description": "database.vector_database",
+        "peekOfCode": "collection_name = \"my_collection\"\nvector_size = 1536\ndistance_metric = Distance.COSINE\n# Check if collection exists\nif not client.collection_exists(collection_name):\n    print(f\"Creating collection: {collection_name}\")\n    client.recreate_collection(\n        collection_name=collection_name,\n        vectors_config=VectorParams(size=vector_size, distance=distance_metric)\n    )",
+        "detail": "database.vector_database",
+        "documentation": {}
+    },
+    {
+        "label": "vector_size",
+        "kind": 5,
+        "importPath": "database.vector_database",
+        "description": "database.vector_database",
+        "peekOfCode": "vector_size = 1536\ndistance_metric = Distance.COSINE\n# Check if collection exists\nif not client.collection_exists(collection_name):\n    print(f\"Creating collection: {collection_name}\")\n    client.recreate_collection(\n        collection_name=collection_name,\n        vectors_config=VectorParams(size=vector_size, distance=distance_metric)\n    )\nelse:",
+        "detail": "database.vector_database",
+        "documentation": {}
+    },
+    {
+        "label": "distance_metric",
+        "kind": 5,
+        "importPath": "database.vector_database",
+        "description": "database.vector_database",
+        "peekOfCode": "distance_metric = Distance.COSINE\n# Check if collection exists\nif not client.collection_exists(collection_name):\n    print(f\"Creating collection: {collection_name}\")\n    client.recreate_collection(\n        collection_name=collection_name,\n        vectors_config=VectorParams(size=vector_size, distance=distance_metric)\n    )\nelse:\n    print(f\"Collection '{collection_name}' already exists.\")",
+        "detail": "database.vector_database",
+        "documentation": {}
+    },
+    {
+        "label": "qdrant",
+        "kind": 5,
+        "importPath": "database.vector_database",
+        "description": "database.vector_database",
+        "peekOfCode": "qdrant = QdrantVectorStore(\n    embedding=OpenAIEmbeddings(),\n    collection_name=collection_name,\n    client=client\n)\n# Define crud vector funcitons in here",
+        "detail": "database.vector_database",
+        "documentation": {}
+    },
+    {
+        "label": "EmotionLog",
+        "kind": 6,
+        "importPath": "models.emotion_log",
+        "description": "models.emotion_log",
+        "peekOfCode": "class EmotionLog(BaseModel):\n    emotion: str\n    source: str\n    context: str",
+        "detail": "models.emotion_log",
+        "documentation": {}
+    },
+    {
+        "label": "UserJournal",
+        "kind": 6,
+        "importPath": "models.journal",
+        "description": "models.journal",
+        "peekOfCode": "class UserJournal(BaseModel):\n    title: str\n    content: str",
+        "detail": "models.journal",
+        "documentation": {}
+    },
+    {
+        "label": "LlmResponse",
+        "kind": 6,
+        "importPath": "models.llm_output",
+        "description": "models.llm_output",
+        "peekOfCode": "class LlmResponse(BaseModel):\n    message: str = Field(description=\"The content of the response message\")\n    sample_response: list[str] = Field(description=\"3 sample user response\")\nparser = PydanticOutputParser(pydantic_object=LlmResponse)",
+        "detail": "models.llm_output",
+        "documentation": {}
+    },
+    {
+        "label": "parser",
+        "kind": 5,
+        "importPath": "models.llm_output",
+        "description": "models.llm_output",
+        "peekOfCode": "parser = PydanticOutputParser(pydantic_object=LlmResponse)",
+        "detail": "models.llm_output",
+        "documentation": {}
+    },
+    {
+        "label": "SyncDataMessage",
+        "kind": 6,
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "peekOfCode": "class SyncDataMessage(BaseModel, Generic[T]):\n    event: str\n    timestamp: str = Field(default=datetime.now().isoformat())\n    payload: T\nclass SyncJournalPayload(BaseModel):\n    user_id: str\n    title: str\n    content: str\nclass SyncChatlogPayload(BaseModel):\n    user_id: str",
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "SyncJournalPayload",
+        "kind": 6,
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "peekOfCode": "class SyncJournalPayload(BaseModel):\n    user_id: str\n    title: str\n    content: str\nclass SyncChatlogPayload(BaseModel):\n    user_id: str\n    sender_type: str\n    journal_id: str\n    message: str\nclass SyncEmotionLog(BaseModel):",
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "SyncChatlogPayload",
+        "kind": 6,
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "peekOfCode": "class SyncChatlogPayload(BaseModel):\n    user_id: str\n    sender_type: str\n    journal_id: str\n    message: str\nclass SyncEmotionLog(BaseModel):\n    user_id: str\n    emotion: str\n    source: str\n    context: str",
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "SyncEmotionLog",
+        "kind": 6,
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "peekOfCode": "class SyncEmotionLog(BaseModel):\n    user_id: str\n    emotion: str\n    source: str\n    context: str\n# WS connection initial message data\nclass TemplateData(BaseModel):\n    content: list[str]\n    title: str\n    category: str",
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "TemplateData",
+        "kind": 6,
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "peekOfCode": "class TemplateData(BaseModel):\n    content: list[str]\n    title: str\n    category: str\nclass InitConnectData(BaseModel):\n    template_data: TemplateData\n    user_info: UserInformations\nclass UserMessagePayload(BaseModel):\n    journal_id: str\n    content: str",
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "InitConnectData",
+        "kind": 6,
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "peekOfCode": "class InitConnectData(BaseModel):\n    template_data: TemplateData\n    user_info: UserInformations\nclass UserMessagePayload(BaseModel):\n    journal_id: str\n    content: str\n    current_journal: str",
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "UserMessagePayload",
+        "kind": 6,
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "peekOfCode": "class UserMessagePayload(BaseModel):\n    journal_id: str\n    content: str\n    current_journal: str",
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "T",
+        "kind": 5,
+        "importPath": "models.messages",
+        "description": "models.messages",
+        "peekOfCode": "T = TypeVar(\"T\")\nclass SyncDataMessage(BaseModel, Generic[T]):\n    event: str\n    timestamp: str = Field(default=datetime.now().isoformat())\n    payload: T\nclass SyncJournalPayload(BaseModel):\n    user_id: str\n    title: str\n    content: str\nclass SyncChatlogPayload(BaseModel):",
+        "detail": "models.messages",
+        "documentation": {}
+    },
+    {
+        "label": "UserInformation",
         "kind": 6,
         "importPath": "models.user",
         "description": "models.user",
-        "peekOfCode": "class UserDataForGuidence(BaseModel):\n    current_week: int\n    chatbot_interaction: str\n    emotion_tracking: str\nclass AIGuidanceResponse(BaseModel):\n    suggest_mindfulness_tip: str = Field(description=\"Tip for the user\")\n    explaination: str = Field(description=\"Explanation for the tip provided\")",
+        "peekOfCode": "class UserInformation(BaseModel):\n    kyc_answers: Optional[Dict[str, Any]]\n    name: Optional[str]\n    age_range: Optional[str]\n    gender: Optional[str]\nclass UserInformations(UserInformation):\n    user_id: str\n    user_setting: Optional[Dict[str, Any]] = None",
         "detail": "models.user",
         "documentation": {}
     },
     {
-        "label": "AIGuidanceResponse",
+        "label": "UserInformations",
         "kind": 6,
         "importPath": "models.user",
         "description": "models.user",
-        "peekOfCode": "class AIGuidanceResponse(BaseModel):\n    suggest_mindfulness_tip: str = Field(description=\"Tip for the user\")\n    explaination: str = Field(description=\"Explanation for the tip provided\")",
+        "peekOfCode": "class UserInformations(UserInformation):\n    user_id: str\n    user_setting: Optional[Dict[str, Any]] = None",
         "detail": "models.user",
         "documentation": {}
     },
@@ -264,17 +945,62 @@
         "kind": 6,
         "importPath": "service.ai_service_processor",
         "description": "service.ai_service_processor",
-        "peekOfCode": "class AIProcessor():\n    def __init__(self):\n        self.model = ChatOpenAI(\n            api_key=os.environ['OPENAI_API_KEY'], model=\"gpt-4o-mini\", streaming=True)\n        self.vector_store = self.load_or_create_faiss_index()\n        self.retriever = self.vector_store.as_retriever()\n    def provide_guidence_process(self, user_data: UserDataForGuidence, parser: JsonOutputParser):\n        prompt_text = '''\n            You are an AI-powered mindfulness chatbot. The user follows a **structured 8-week mindfulness program**.\n            With context: {context}",
+        "peekOfCode": "class AIProcessor():\n    def __init__(self, init_metadata: InitConnectData):\n        # self.tools = [create_journal, get_emotion_data,\n        #               change_user_emotion_theme]\n        self.model = ChatOpenAI(\n            api_key=os.environ['OPENAI_API_KEY'], model=\"gpt-4o-mini\", streaming=True)\n        # .bind_tools(\n        #     tools=self.tools, tool_choice=\"auto\")\n        self.vector_store = qdrant\n        self.init_metadata = init_metadata",
         "detail": "service.ai_service_processor",
         "documentation": {}
     },
     {
-        "label": "FAISS_INDEX_PATH",
-        "kind": 5,
-        "importPath": "service.ai_service_processor",
-        "description": "service.ai_service_processor",
-        "peekOfCode": "FAISS_INDEX_PATH = \"faiss_index\"\nclass AIProcessor():\n    def __init__(self):\n        self.model = ChatOpenAI(\n            api_key=os.environ['OPENAI_API_KEY'], model=\"gpt-4o-mini\", streaming=True)\n        self.vector_store = self.load_or_create_faiss_index()\n        self.retriever = self.vector_store.as_retriever()\n    def provide_guidence_process(self, user_data: UserDataForGuidence, parser: JsonOutputParser):\n        prompt_text = '''\n            You are an AI-powered mindfulness chatbot. The user follows a **structured 8-week mindfulness program**.",
-        "detail": "service.ai_service_processor",
+        "label": "BasicToolNode",
+        "kind": 6,
+        "importPath": "service.ai_tools",
+        "description": "service.ai_tools",
+        "peekOfCode": "class BasicToolNode:\n    \"\"\"A node that runs the tools requested in the last AIMessage.\"\"\"\n    def __init__(self, tools: list) -> None:\n        self.tools_by_name = {tool.name: tool for tool in tools}\n    def __call__(self, inputs: dict):\n        if messages := inputs.get(\"messages\", []):\n            message = messages[-1]\n        else:\n            raise ValueError(\"No message found in input\")\n        outputs = []",
+        "detail": "service.ai_tools",
+        "documentation": {}
+    },
+    {
+        "label": "route_tools",
+        "kind": 2,
+        "importPath": "service.ai_tools",
+        "description": "service.ai_tools",
+        "peekOfCode": "def route_tools(\n    state: MessagesState,\n):\n    \"\"\"\n    Use in the conditional_edge to route to the ToolNode if the last message\n    has tool calls. Otherwise, route to the end.\n    \"\"\"\n    if isinstance(state, list):\n        ai_message = state[-1]\n    elif messages := state.get(\"messages\", []):",
+        "detail": "service.ai_tools",
+        "documentation": {}
+    },
+    {
+        "label": "create_journal",
+        "kind": 2,
+        "importPath": "service.ai_tools",
+        "description": "service.ai_tools",
+        "peekOfCode": "def create_journal(user_id: str, title: str, content: str):\n    rabbitmq_conn = RabbitMQ()\n    \"\"\"\n    Summarise the current conversation after user have sharing their current mental state and notify the user after the journal created. Write the journal\n    with user perspective\n    Args:\n        user_id (str): user_id in uuid format\n        title (str): title of the journal\n        content (str): content of the journal\n    Example:",
+        "detail": "service.ai_tools",
+        "documentation": {}
+    },
+    {
+        "label": "change_user_emotion_theme",
+        "kind": 2,
+        "importPath": "service.ai_tools",
+        "description": "service.ai_tools",
+        "peekOfCode": "def change_user_emotion_theme(emotion: str, source: str, context: str):\n    \"\"\"\n    Change user's current emotion state from the last log entry\n    Args:\n        emotion (str): the last emotion log entry user created\n        source (str): \"ai\"\n        context (str): summarize the context of the conversation that the emotion log is created\n    Example:\n        User saying they're feeling stress, you ask some gental following question before call this tool. .\n    \"\"\"",
+        "detail": "service.ai_tools",
+        "documentation": {}
+    },
+    {
+        "label": "get_emotion_data",
+        "kind": 2,
+        "importPath": "service.ai_tools",
+        "description": "service.ai_tools",
+        "peekOfCode": "def get_emotion_data(start_time: str, end_time: str):\n    \"\"\"\n    Get the emotion log in some period of time. Provide ISO 8601 datetime strings.\n    \"\"\"\n    start = datetime.datetime.fromisoformat(start_time)\n    end = datetime.datetime.fromisoformat(end_time)\n    return f\"Querying logs from {start} to {end}\"",
+        "detail": "service.ai_tools",
+        "documentation": {}
+    },
+    {
+        "label": "format_system_prompt",
+        "kind": 2,
+        "importPath": "service.helper",
+        "description": "service.helper",
+        "peekOfCode": "def format_system_prompt(init_data: InitConnectData, context: str = \"\") -> str:\n    return f\"\"\"\nYou are a supportive journaling companion that helps users reflect on their thoughts and feelings. \nYou are not a therapist, but you guide conversations in a compassionate and non-judgmental way.\n### Instructions:\n- Use the given template questions as a guide for the flow of conversation.\n- The user is taking the journal. While taking journal, they will share with you some thoughs or ask questions to help them complete the journal \n- If the user goes off-topic, gently redirect them back to the journaling flow without being strict..\n- Do not give medical or therapeutic advice. Your role is to listen, encourage reflection, and help the user express themselves.\n### Context Provided:",
+        "detail": "service.helper",
         "documentation": {}
     },
     {
@@ -284,6 +1010,303 @@
         "description": "service.rabbitmq",
         "peekOfCode": "class RabbitMQ:\n    def __init__(self):\n        self.user = os.getenv('RABBITMQ_USER', 'guest')\n        self.password = os.getenv('RABBITMQ_PASSWORD', 'guest')\n        self.host = os.getenv('RABBITMQ_HOST', 'rabbitmq')\n        self.port = int(os.getenv('RABBITMQ_PORT', 5672))\n        self.connection = None\n        self.channel = None\n        self.connect()\n    def connect(self):",
         "detail": "service.rabbitmq",
+        "documentation": {}
+    },
+    {
+        "label": "rabbitmq_conn",
+        "kind": 5,
+        "importPath": "service.rabbitmq",
+        "description": "service.rabbitmq",
+        "peekOfCode": "rabbitmq_conn = RabbitMQ()",
+        "detail": "service.rabbitmq",
+        "documentation": {}
+    },
+    {
+        "label": "get_user_information",
+        "kind": 2,
+        "importPath": "utils.utils",
+        "description": "utils.utils",
+        "peekOfCode": "def get_user_information(token: str) -> requests.Response:\n    return requests.get(f\"{os.getenv(\"CORE_SERVICE_URL\")}/user_information\", headers={\n        \"Authorization\": token\n    })",
+        "detail": "utils.utils",
+        "documentation": {}
+    },
+    {
+        "label": "Tee",
+        "kind": 6,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "class Tee:\n    def __init__(self, file):\n        self.f = file\n    def write(self, what):\n        if self.f is not None:\n            try:\n                self.f.write(what.replace(\"\\n\", \"\\r\\n\"))\n            except OSError:\n                pass\n        tee_f.write(what)",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "get_root_hkey",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def get_root_hkey():\n    try:\n        winreg.OpenKey(\n            winreg.HKEY_LOCAL_MACHINE, root_key_name, 0, winreg.KEY_CREATE_SUB_KEY\n        )\n        return winreg.HKEY_LOCAL_MACHINE\n    except OSError:\n        # Either not exist, or no permissions to create subkey means\n        # must be HKCU\n        return winreg.HKEY_CURRENT_USER",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "create_shortcut",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def create_shortcut(\n    path, description, filename, arguments=\"\", workdir=\"\", iconpath=\"\", iconindex=0\n):\n    import pythoncom\n    from win32com.shell import shell\n    ilink = pythoncom.CoCreateInstance(\n        shell.CLSID_ShellLink,\n        None,\n        pythoncom.CLSCTX_INPROC_SERVER,\n        shell.IID_IShellLink,",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "get_special_folder_path",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def get_special_folder_path(path_name):\n    from win32com.shell import shell, shellcon\n    for maybe in \"\"\"\n        CSIDL_COMMON_STARTMENU CSIDL_STARTMENU CSIDL_COMMON_APPDATA\n        CSIDL_LOCAL_APPDATA CSIDL_APPDATA CSIDL_COMMON_DESKTOPDIRECTORY\n        CSIDL_DESKTOPDIRECTORY CSIDL_COMMON_STARTUP CSIDL_STARTUP\n        CSIDL_COMMON_PROGRAMS CSIDL_PROGRAMS CSIDL_PROGRAM_FILES_COMMON\n        CSIDL_PROGRAM_FILES CSIDL_FONTS\"\"\".split():\n        if maybe == path_name:\n            csidl = getattr(shellcon, maybe)",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "CopyTo",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def CopyTo(desc, src, dest):\n    import win32api\n    import win32con\n    while 1:\n        try:\n            win32api.CopyFile(src, dest, 0)\n            return\n        except win32api.error as details:\n            if details.winerror == 5:  # access denied - user not admin.\n                raise",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "LoadSystemModule",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def LoadSystemModule(lib_dir, modname):\n    # See if this is a debug build.\n    import importlib.machinery\n    import importlib.util\n    suffix = \"_d\" if \"_d.pyd\" in importlib.machinery.EXTENSION_SUFFIXES else \"\"\n    filename = \"%s%d%d%s.dll\" % (\n        modname,\n        sys.version_info.major,\n        sys.version_info.minor,\n        suffix,",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "SetPyKeyVal",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def SetPyKeyVal(key_name, value_name, value):\n    root_hkey = get_root_hkey()\n    root_key = winreg.OpenKey(root_hkey, root_key_name)\n    try:\n        my_key = winreg.CreateKey(root_key, key_name)\n        try:\n            winreg.SetValueEx(my_key, value_name, 0, winreg.REG_SZ, value)\n            if verbose:\n                print(f\"-> {root_key_name}\\\\{key_name}[{value_name}]={value!r}\")\n        finally:",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "UnsetPyKeyVal",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def UnsetPyKeyVal(key_name, value_name, delete_key=False):\n    root_hkey = get_root_hkey()\n    root_key = winreg.OpenKey(root_hkey, root_key_name)\n    try:\n        my_key = winreg.OpenKey(root_key, key_name, 0, winreg.KEY_SET_VALUE)\n        try:\n            winreg.DeleteValue(my_key, value_name)\n            if verbose:\n                print(f\"-> DELETE {root_key_name}\\\\{key_name}[{value_name}]\")\n        finally:",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "RegisterCOMObjects",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def RegisterCOMObjects(register=True):\n    import win32com.server.register\n    if register:\n        func = win32com.server.register.RegisterClasses\n    else:\n        func = win32com.server.register.UnregisterClasses\n    flags = {}\n    if not verbose:\n        flags[\"quiet\"] = 1\n    for module, klass_name in com_modules:",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "RegisterHelpFile",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def RegisterHelpFile(register=True, lib_dir=None):\n    if lib_dir is None:\n        lib_dir = sysconfig.get_paths()[\"platlib\"]\n    if register:\n        # Register the .chm help file.\n        chm_file = os.path.join(lib_dir, \"PyWin32.chm\")\n        if os.path.isfile(chm_file):\n            # This isn't recursive, so if 'Help' doesn't exist, we croak\n            SetPyKeyVal(\"Help\", None, None)\n            SetPyKeyVal(\"Help\\\\Pythonwin Reference\", None, chm_file)",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "RegisterPythonwin",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def RegisterPythonwin(register=True, lib_dir=None):\n    \"\"\"Add (or remove) Pythonwin to context menu for python scripts.\n    ??? Should probably also add Edit command for pys files also.\n    Also need to remove these keys on uninstall, but there's no function\n    to add registry entries to uninstall log ???\n    \"\"\"\n    import os\n    if lib_dir is None:\n        lib_dir = sysconfig.get_paths()[\"platlib\"]\n    classes_root = get_root_hkey()",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "get_shortcuts_folder",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def get_shortcuts_folder():\n    if get_root_hkey() == winreg.HKEY_LOCAL_MACHINE:\n        try:\n            fldr = get_special_folder_path(\"CSIDL_COMMON_PROGRAMS\")\n        except OSError:\n            # No CSIDL_COMMON_PROGRAMS on this platform\n            fldr = get_special_folder_path(\"CSIDL_PROGRAMS\")\n    else:\n        # non-admin install - always goes in this user's start menu.\n        fldr = get_special_folder_path(\"CSIDL_PROGRAMS\")",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "get_system_dir",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def get_system_dir():\n    import win32api  # we assume this exists.\n    try:\n        import pythoncom\n        import win32process\n        from win32com.shell import shell, shellcon\n        try:\n            if win32process.IsWow64Process():\n                return shell.SHGetSpecialFolderPath(0, shellcon.CSIDL_SYSTEMX86)\n            return shell.SHGetSpecialFolderPath(0, shellcon.CSIDL_SYSTEM)",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "fixup_dbi",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def fixup_dbi():\n    # We used to have a dbi.pyd with our .pyd files, but now have a .py file.\n    # If the user didn't uninstall, they will find the .pyd which will cause\n    # problems - so handle that.\n    import win32api\n    import win32con\n    pyd_name = os.path.join(os.path.dirname(win32api.__file__), \"dbi.pyd\")\n    pyd_d_name = os.path.join(os.path.dirname(win32api.__file__), \"dbi_d.pyd\")\n    py_name = os.path.join(os.path.dirname(win32con.__file__), \"dbi.py\")\n    for this_pyd in (pyd_name, pyd_d_name):",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "install",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def install(lib_dir):\n    import traceback\n    # The .pth file is now installed as a regular file.\n    # Create the .pth file in the site-packages dir, and use only relative paths\n    # We used to write a .pth directly to sys.prefix - clobber it.\n    if os.path.isfile(os.path.join(sys.prefix, \"pywin32.pth\")):\n        os.unlink(os.path.join(sys.prefix, \"pywin32.pth\"))\n    # The .pth may be new and therefore not loaded in this session.\n    # Setup the paths just in case.\n    for name in \"win32 win32\\\\lib Pythonwin\".split():",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "uninstall",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def uninstall(lib_dir):\n    # First ensure our system modules are loaded from pywin32_system, so\n    # we can remove the ones we copied...\n    LoadSystemModule(lib_dir, \"pywintypes\")\n    LoadSystemModule(lib_dir, \"pythoncom\")\n    try:\n        RegisterCOMObjects(False)\n    except Exception as why:\n        print(f\"Failed to unregister COM objects: {why}\")\n    try:",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "verify_destination",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def verify_destination(location: str) -> str:\n    location = os.path.abspath(location)\n    if not os.path.isdir(location):\n        raise argparse.ArgumentTypeError(\n            f'Path \"{location}\" is not an existing directory!'\n        )\n    return location\ndef main():\n    parser = argparse.ArgumentParser(\n        formatter_class=argparse.RawDescriptionHelpFormatter,",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "def main():\n    parser = argparse.ArgumentParser(\n        formatter_class=argparse.RawDescriptionHelpFormatter,\n        description=\"\"\"A post-install script for the pywin32 extensions.\n    * Typical usage:\n    > python -m pywin32_postinstall -install\n    * or (shorter but you don't have control over which python environment is used)\n    > pywin32_postinstall -install\n    You need to execute this script, with a '-install' parameter,\n    to ensure the environment is setup correctly to install COM objects, services, etc.",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "tee_f",
+        "kind": 5,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "tee_f = open(\n    os.path.join(\n        tempfile.gettempdir(),  # Send output somewhere so it can be found if necessary...\n        \"pywin32_postinstall.log\",\n    ),\n    \"w\",\n)\nclass Tee:\n    def __init__(self, file):\n        self.f = file",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "sys.stderr",
+        "kind": 5,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "sys.stderr = Tee(sys.stderr)\nsys.stdout = Tee(sys.stdout)\ncom_modules = [\n    # module_name,                      class_names\n    (\"win32com.servers.interp\", \"Interpreter\"),\n    (\"win32com.servers.dictionary\", \"DictionaryPolicy\"),\n    (\"win32com.axscript.client.pyscript\", \"PyScript\"),\n]\n# Is this a 'silent' install - ie, avoid all dialogs.\n# Different than 'verbose'",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "sys.stdout",
+        "kind": 5,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "sys.stdout = Tee(sys.stdout)\ncom_modules = [\n    # module_name,                      class_names\n    (\"win32com.servers.interp\", \"Interpreter\"),\n    (\"win32com.servers.dictionary\", \"DictionaryPolicy\"),\n    (\"win32com.axscript.client.pyscript\", \"PyScript\"),\n]\n# Is this a 'silent' install - ie, avoid all dialogs.\n# Different than 'verbose'\nsilent = 0",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "com_modules",
+        "kind": 5,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "com_modules = [\n    # module_name,                      class_names\n    (\"win32com.servers.interp\", \"Interpreter\"),\n    (\"win32com.servers.dictionary\", \"DictionaryPolicy\"),\n    (\"win32com.axscript.client.pyscript\", \"PyScript\"),\n]\n# Is this a 'silent' install - ie, avoid all dialogs.\n# Different than 'verbose'\nsilent = 0\n# Verbosity of output messages.",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "silent",
+        "kind": 5,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "silent = 0\n# Verbosity of output messages.\nverbose = 1\nroot_key_name = \"Software\\\\Python\\\\PythonCore\\\\\" + sys.winver\ndef get_root_hkey():\n    try:\n        winreg.OpenKey(\n            winreg.HKEY_LOCAL_MACHINE, root_key_name, 0, winreg.KEY_CREATE_SUB_KEY\n        )\n        return winreg.HKEY_LOCAL_MACHINE",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "verbose",
+        "kind": 5,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "verbose = 1\nroot_key_name = \"Software\\\\Python\\\\PythonCore\\\\\" + sys.winver\ndef get_root_hkey():\n    try:\n        winreg.OpenKey(\n            winreg.HKEY_LOCAL_MACHINE, root_key_name, 0, winreg.KEY_CREATE_SUB_KEY\n        )\n        return winreg.HKEY_LOCAL_MACHINE\n    except OSError:\n        # Either not exist, or no permissions to create subkey means",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "root_key_name",
+        "kind": 5,
+        "importPath": "venv.Scripts.pywin32_postinstall",
+        "description": "venv.Scripts.pywin32_postinstall",
+        "peekOfCode": "root_key_name = \"Software\\\\Python\\\\PythonCore\\\\\" + sys.winver\ndef get_root_hkey():\n    try:\n        winreg.OpenKey(\n            winreg.HKEY_LOCAL_MACHINE, root_key_name, 0, winreg.KEY_CREATE_SUB_KEY\n        )\n        return winreg.HKEY_LOCAL_MACHINE\n    except OSError:\n        # Either not exist, or no permissions to create subkey means\n        # must be HKCU",
+        "detail": "venv.Scripts.pywin32_postinstall",
+        "documentation": {}
+    },
+    {
+        "label": "run_test",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_testall",
+        "description": "venv.Scripts.pywin32_testall",
+        "peekOfCode": "def run_test(script, cmdline_extras):\n    dirname, scriptname = os.path.split(script)\n    # some tests prefer to be run from their directory.\n    cmd = [sys.executable, \"-u\", scriptname] + cmdline_extras\n    print(\"--- Running '%s' ---\" % script)\n    sys.stdout.flush()\n    result = subprocess.run(cmd, check=False, cwd=dirname)\n    print(f\"*** Test script '{script}' exited with {result.returncode}\")\n    sys.stdout.flush()\n    if result.returncode:",
+        "detail": "venv.Scripts.pywin32_testall",
+        "documentation": {}
+    },
+    {
+        "label": "find_and_run",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_testall",
+        "description": "venv.Scripts.pywin32_testall",
+        "peekOfCode": "def find_and_run(possible_locations, extras):\n    for maybe in possible_locations:\n        if os.path.isfile(maybe):\n            run_test(maybe, extras)\n            break\n    else:\n        raise RuntimeError(\n            \"Failed to locate a test script in one of %s\" % possible_locations\n        )\ndef main():",
+        "detail": "venv.Scripts.pywin32_testall",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "venv.Scripts.pywin32_testall",
+        "description": "venv.Scripts.pywin32_testall",
+        "peekOfCode": "def main():\n    import argparse\n    code_directories = [project_root] + site_packages\n    parser = argparse.ArgumentParser(\n        description=\"A script to trigger tests in all subprojects of PyWin32.\"\n    )\n    parser.add_argument(\n        \"-no-user-interaction\",\n        default=False,\n        action=\"store_true\",",
+        "detail": "venv.Scripts.pywin32_testall",
+        "documentation": {}
+    },
+    {
+        "label": "project_root",
+        "kind": 5,
+        "importPath": "venv.Scripts.pywin32_testall",
+        "description": "venv.Scripts.pywin32_testall",
+        "peekOfCode": "project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))\nsite_packages = [site.getusersitepackages()] + site.getsitepackages()\nfailures = []\n# Run a test using subprocess and wait for the result.\n# If we get an returncode != 0, we know that there was an error, but we don't\n# abort immediately - we run as many tests as we can.\ndef run_test(script, cmdline_extras):\n    dirname, scriptname = os.path.split(script)\n    # some tests prefer to be run from their directory.\n    cmd = [sys.executable, \"-u\", scriptname] + cmdline_extras",
+        "detail": "venv.Scripts.pywin32_testall",
+        "documentation": {}
+    },
+    {
+        "label": "site_packages",
+        "kind": 5,
+        "importPath": "venv.Scripts.pywin32_testall",
+        "description": "venv.Scripts.pywin32_testall",
+        "peekOfCode": "site_packages = [site.getusersitepackages()] + site.getsitepackages()\nfailures = []\n# Run a test using subprocess and wait for the result.\n# If we get an returncode != 0, we know that there was an error, but we don't\n# abort immediately - we run as many tests as we can.\ndef run_test(script, cmdline_extras):\n    dirname, scriptname = os.path.split(script)\n    # some tests prefer to be run from their directory.\n    cmd = [sys.executable, \"-u\", scriptname] + cmdline_extras\n    print(\"--- Running '%s' ---\" % script)",
+        "detail": "venv.Scripts.pywin32_testall",
+        "documentation": {}
+    },
+    {
+        "label": "failures",
+        "kind": 5,
+        "importPath": "venv.Scripts.pywin32_testall",
+        "description": "venv.Scripts.pywin32_testall",
+        "peekOfCode": "failures = []\n# Run a test using subprocess and wait for the result.\n# If we get an returncode != 0, we know that there was an error, but we don't\n# abort immediately - we run as many tests as we can.\ndef run_test(script, cmdline_extras):\n    dirname, scriptname = os.path.split(script)\n    # some tests prefer to be run from their directory.\n    cmd = [sys.executable, \"-u\", scriptname] + cmdline_extras\n    print(\"--- Running '%s' ---\" % script)\n    sys.stdout.flush()",
+        "detail": "venv.Scripts.pywin32_testall",
         "documentation": {}
     },
     {
@@ -323,20 +1346,20 @@
         "documentation": {}
     },
     {
-        "label": "WebSocketServer",
-        "kind": 6,
+        "label": "rabbitmq_callback",
+        "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class WebSocketServer(tornado.websocket.WebSocketHandler):\n    \"\"\"Simple WebSocket handler to serve clients.\"\"\"\n    # Note that `clients` is a class variable and `send_message` is a\n    # classmethod.\n    clients = set()\n    def on_message(self, message):\n        self.write_message(u\"You said: \" + message)\n    def open(self):\n        self.clients.add(self)\n    def on_close(self):",
+        "peekOfCode": "def rabbitmq_callback(ch, method, properties, body):\n    user_data = json.loads(body)\n    res = f\"Received message: {user_data}\"\n    # Push to all connected clients\n    asyncio.create_task(connected_websockets[user_data.uuid].send_text(\n        res))  # async-safe call\nif __name__ == \"__main__\":\n    try:\n        uvicorn.run(\"main:app\", host=\"0.0.0.0\", port=8000, reload=False)\n    except KeyboardInterrupt:",
         "detail": "main",
         "documentation": {}
     },
     {
-        "label": "callback",
-        "kind": 2,
+        "label": "app",
+        "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def callback(ch, method, properties, body):\n    ai_processor = AIProcessor()\n    parser = JsonOutputParser(pydantic_object=AIGuidanceResponse)\n    user_data = json.load(body)\n    user_pass_data = UserDataForGuidence(**user_data)\n    res = ai_processor.provide_guidence_process(\n        user_data=user_pass_data, parser=parser)\n    ch.basic_publish(exchange='',\n                     routing_key=\"ai_response\",\n                     body=json.dumps(res),",
+        "peekOfCode": "app = FastAPI(lifespan=lifespan)\n# Allow all origins\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\nconnected_websockets: dict[str, WebSocket] = {}",
         "detail": "main",
         "documentation": {}
     }
