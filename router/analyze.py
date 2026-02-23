@@ -1,39 +1,27 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from typing import Optional, Dict, Any, List
 from service.ai_service_processor import AIProcessor
+from models.messages import AnalyzeJournalRequest
 
 router = APIRouter()
 
 
-class AnalyzeJournalRequest(BaseModel):
-    content: str
-    mood_score: int
-    slide_prompt: Optional[str] = None
-    slide_group_context: Optional[Dict[str, Any]
-                                  ] = None  # Full slide group info
-    current_slide_id: Optional[str] = None  # Current slide being worked on
-    collection_title: Optional[str] = None  # Collection name for context
-    # Reflection direction: 'why', 'emotions', 'patterns', 'challenge', 'growth'
-    direction: Optional[str] = None
+class AnalyzeJournalResponse:
+    """Simple response wrapper — FastAPI will serialize it from the dict."""
+    pass
 
 
-class AnalyzeJournalResponse(BaseModel):
-    question: str
-
-
-@router.post("/api/analyze-journal", response_model=AnalyzeJournalResponse)
+@router.post("/api/analyze-journal")
 async def analyze_journal(request: AnalyzeJournalRequest):
     """
-    Generate a single follow-up question based on user's journal content and current slide prompt.
-    Now includes full slide group context to make AI more aware of the journaling session.
+    Generate a single follow-up question based on user's journal content.
+    Now enhanced with RAG: queries Qdrant for the user's past journals
+    and includes them as context for more personalized, pattern-aware questions.
     """
     try:
-        # Create AIProcessor instance (without init_metadata for simple question generation)
         ai_processor = AIProcessor()
 
-        # Generate question using the processor with enhanced context
         question = ai_processor.generate_journal_question(
+            user_id=request.user_id,
             content=request.content,
             mood_score=request.mood_score,
             slide_prompt=request.slide_prompt,
@@ -43,7 +31,7 @@ async def analyze_journal(request: AnalyzeJournalRequest):
             direction=request.direction
         )
 
-        return AnalyzeJournalResponse(question=question)
+        return {"question": question}
 
     except Exception as e:
         raise HTTPException(

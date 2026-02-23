@@ -1,4 +1,4 @@
-from typing import Generic, TypeVar
+from typing import Generic, TypeVar, Optional, Any
 from pydantic import BaseModel, Field
 from datetime import datetime
 from models.user import UserInformations
@@ -32,19 +32,35 @@ class SyncEmotionLog(BaseModel):
     context: str
 
 
-# WS connection initial message data
-class TemplateData(BaseModel):
-    content: list[str]
+# --- AI Tasks (Core → AI service via ai_tasks queue) ---
+
+class AITaskMessage(BaseModel):
+    """Envelope for messages received from the ai_tasks queue."""
+    event: str
+    timestamp: str
+    payload: Any
+
+
+class JournalIndexPayload(BaseModel):
+    """Payload for journal.index events — sent by core service for Qdrant indexing."""
+    id: str
+    user_id: str
     title: str
-    category: str
-
-
-class InitConnectData(BaseModel):
-    template_data: TemplateData
-    user_info: UserInformations
-
-
-class UserMessagePayload(BaseModel):
-    journal_id: str
     content: str
-    current_journal: str
+    mood_score: Optional[int] = None
+    mood_label: Optional[str] = None
+    created_at: Optional[str] = None
+
+
+# --- Analyze Journal (Go Deeper) ---
+
+class AnalyzeJournalRequest(BaseModel):
+    """Request model for the /api/analyze-journal endpoint."""
+    user_id: str
+    content: str
+    mood_score: int
+    slide_prompt: Optional[str] = None
+    slide_group_context: Optional[dict] = None
+    current_slide_id: Optional[str] = None
+    collection_title: Optional[str] = None
+    direction: Optional[str] = None

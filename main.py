@@ -1,68 +1,89 @@
 import asyncio
 import json
-import os
 import sys
 import dotenv
 import uvicorn
-import pika
-from typing import List
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from service.rabbitmq import RabbitMQ
-from service.ai_service_processor import AIProcessor
-from langchain_core.output_parsers import JsonOutputParser
-from langchain_core.documents import Document
 from service.rabbitmq import rabbitmq_conn
-from models.messages import SyncDataMessage, SyncChatlogPayload, InitConnectData, UserMessagePayload
-from database.vector_database import QdrantClient
-from datetime import datetime
-from uuid import uuid4
+from models.messages import AITaskMessage, JournalIndexPayload
+from database.vector_database import index_journal
 from router.analyze import router as analyze_router
 
 
 dotenv.load_dotenv()
-# --- RabbitMQ Consumer Task ---
+
+
+# --- RabbitMQ Consumer: ai_tasks queue ---
+
+def ai_tasks_callback(ch, method, properties, body):
+    """
+    Process messages from the ai_tasks queue.
+    Currently handles:
+      - journal.index: Index/re-index a journal entry in Qdrant
+    """
+    try:
+        raw = json.loads(body)
+        message = AITaskMessage.model_validate(raw)
+
+        if message.event == "journal.index":
+            payload = JournalIndexPayload.model_validate(message.payload)
+            index_journal(
+                journal_id=payload.id,
+                user_id=payload.user_id,
+                content=payload.content,
+                title=payload.title,
+                mood_score=payload.mood_score,
+                mood_label=payload.mood_label,
+                created_at=payload.created_at,
+            )
+            print(
+                f"[ai_tasks] Indexed journal {payload.id} for user {payload.user_id}")
+        else:
+            print(f"[ai_tasks] Unknown event: {message.event}")
+
+    except Exception as e:
+        print(f"[ai_tasks] Error processing message: {e}")
 
 
 async def start_rabbitmq_consumer():
+    """Start the blocking RabbitMQ consumer in a background thread."""
     rabbitmq_conn.channel.queue_declare("ai_tasks")
-    rabbitmq_conn.channel.queue_declare("sync_data")
 
     loop = asyncio.get_event_loop()
 
     def run():
         try:
-            print("Starting RabbitMQ consumer...")
+            print("[ai_tasks] Starting RabbitMQ consumer on 'ai_tasks' queue...")
             rabbitmq_conn.consume(queue_name='ai_tasks',
-                                  callback=rabbitmq_callback)
+                                  callback=ai_tasks_callback)
         except Exception as e:
-            print("RabbitMQ error:", e)
+            print(f"[ai_tasks] RabbitMQ consumer error: {e}")
             sys.exit(1)
 
-    # Run blocking consumer in thread
     await loop.run_in_executor(None, run)
 
 
-# --- FastAPI Startup Hook ---
+# --- FastAPI App ---
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup logic
+    # Startup: launch RabbitMQ consumer
     consumer_task = asyncio.create_task(start_rabbitmq_consumer())
-    print("RabbitMQ consumer started")
-
+    print("[startup] RabbitMQ consumer started")
     yield
-
-    # Shutdown logic (optional)
+    # Shutdown
     consumer_task.cancel()
-    print("Shutting down RabbitMQ consumer")
+    print("[shutdown] RabbitMQ consumer stopped")
+
 
 app = FastAPI(lifespan=lifespan)
 
 # Register routers
 app.include_router(analyze_router)
 
-# Allow all origins
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -70,68 +91,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-connected_websockets: dict[str, WebSocket] = {}
-
-# --- WebSocket Route ---
 
 
-@app.websocket("/ws/{user_uuid}")
-async def websocket_endpoint(websocket: WebSocket, user_uuid: str):
-    await websocket.accept()
-    connected_websockets[user_uuid] = websocket
-    rabbitmq_ins = RabbitMQ()
-
-    initial_message = await websocket.receive_text()
-    init_metadata = InitConnectData.model_validate_json(initial_message)
-    ai_processor = AIProcessor(init_metadata)
-    try:
-        while True:
-            # Can be replaced with actual chat triggers
-
-            data = await websocket.receive_text()
-            # Decode the user message
-            user_input = UserMessagePayload.model_validate_json(data)
-
-            # Response with the model
-            response = ai_processor.response_chat(user_input)
-            response_message = {
-                "content": response.content,
-            }
-            await connected_websockets[user_uuid].send_text(json.dumps(response_message))
-
-            # sync data with Golang service
-            for chat_message in [[data, "user"], [response.content, "bot"]]:
-                chatlog = SyncChatlogPayload(
-                    user_id=user_uuid, sender_type=chat_message[1], message=chat_message[0], journal_id=user_input.journal_id)
-                message = SyncDataMessage[SyncChatlogPayload](
-                    event="chatlog.create", payload=chatlog).model_dump_json()
-                rabbitmq_ins.publish("sync_data", message)
-
-            # Save to vector store
-            documents_add = [Document(page_content=data, metadata={
-                "type": "chatlog",
-                "created_at": datetime.now().timestamp(),
-                "sender_type": "user"
-            }), Document(page_content=response.content, metadata={
-                "type": "chatlog",
-                "created_at": datetime.now().timestamp(),
-                "sender_type": "bot"
-            })]
-            ai_processor.vector_store.add_documents(
-                documents=documents_add, ids=[str(uuid4()) for _ in documents_add])
-
-    except WebSocketDisconnect:
-        del connected_websockets[user_uuid]
-        print("WebSocket disconnected")
-
-
-def rabbitmq_callback(ch, method, properties, body):
-    user_data = json.loads(body)
-    res = f"Received message: {user_data}"
-
-    # Push to all connected clients
-    asyncio.create_task(connected_websockets[user_data.uuid].send_text(
-        res))  # async-safe call
+@app.get("/healthcheck")
+async def healthcheck():
+    return {"status": "ok", "service": "tranquara_ai_service"}
 
 
 if __name__ == "__main__":
