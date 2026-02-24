@@ -52,6 +52,12 @@ class JournalIndexPayload(BaseModel):
     created_at: Optional[str] = None
 
 
+class JournalDeletePayload(BaseModel):
+    """Payload for journal.delete events — removes journal vector from Qdrant."""
+    id: str
+    user_id: str
+
+
 # --- Analyze Journal (Go Deeper) ---
 
 class AnalyzeJournalRequest(BaseModel):

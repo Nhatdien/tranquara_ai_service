@@ -99,3 +99,20 @@ def index_journal(journal_id: str, user_id: str, content: str,
         ids=[journal_id]
     )
     print(f"Indexed journal {journal_id} for user {user_id}")
+
+
+def delete_journal(journal_id: str):
+    """
+    Delete a journal entry vector from Qdrant.
+    Called when a user deletes a journal so it no longer appears in RAG results.
+
+    Args:
+        journal_id: UUID of the journal (the Qdrant point ID)
+    """
+    from qdrant_client.models import PointIdsList
+
+    client.delete(
+        collection_name=JOURNAL_COLLECTION,
+        points_selector=PointIdsList(points=[journal_id])
+    )
+    print(f"Deleted journal {journal_id} from Qdrant")

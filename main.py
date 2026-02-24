@@ -7,8 +7,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from service.rabbitmq import rabbitmq_conn
-from models.messages import AITaskMessage, JournalIndexPayload
-from database.vector_database import index_journal
+from models.messages import AITaskMessage, JournalIndexPayload, JournalDeletePayload
+from database.vector_database import index_journal, delete_journal
 from router.analyze import router as analyze_router
 
 
@@ -40,6 +40,13 @@ def ai_tasks_callback(ch, method, properties, body):
             )
             print(
                 f"[ai_tasks] Indexed journal {payload.id} for user {payload.user_id}")
+
+        elif message.event == "journal.delete":
+            payload = JournalDeletePayload.model_validate(message.payload)
+            delete_journal(journal_id=payload.id)
+            print(
+                f"[ai_tasks] Deleted journal {payload.id} for user {payload.user_id}")
+
         else:
             print(f"[ai_tasks] Unknown event: {message.event}")
 
