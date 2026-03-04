@@ -28,7 +28,8 @@ async def analyze_journal(request: AnalyzeJournalRequest):
             slide_group_context=request.slide_group_context,
             current_slide_id=request.current_slide_id,
             collection_title=request.collection_title,
-            direction=request.direction
+            direction=request.direction,
+            your_story=request.your_story
         )
 
         return {"question": question}

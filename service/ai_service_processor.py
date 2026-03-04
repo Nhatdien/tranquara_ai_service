@@ -63,7 +63,7 @@ class AIProcessor():
     def generate_journal_question(self, user_id: str, content: str, mood_score: int,
                                   slide_prompt: str = None, slide_group_context: dict = None,
                                   current_slide_id: str = None, collection_title: str = None,
-                                  direction: str = None) -> str:
+                                  direction: str = None, your_story: str = None) -> str:
         """
         Generate a single follow-up question based on journal content.
         Enhanced with:
@@ -131,6 +131,19 @@ recurring themes, emotional trends, or growth. Reference them naturally if relev
 --- End Past Journals ---
 """
 
+        # --- Build user story section ---
+        your_story_section = ""
+        if your_story and your_story.strip():
+            your_story_section = f"""
+--- User's Personal Context ---
+The user has shared the following about themselves. Use this to personalize your
+question — acknowledge their situation, goals, or background when relevant.
+Do NOT repeat their story back verbatim; weave it in naturally.
+
+"{your_story.strip()}"
+--- End Personal Context ---
+"""
+
         # --- Build the user prompt ---
         user_prompt = f"""Journaling Session Context:
 {context_section}
@@ -141,7 +154,7 @@ User's Current Writing:
 {content}
 
 User's Mood Score: {mood_score}/10
-{past_journals_section}
+{your_story_section}{past_journals_section}
 Based on the FULL CONTEXT of this journaling session, the user's current writing,
 and their past journal history (if available), generate ONE follow-up question that:
 1. Relates specifically to what they just wrote

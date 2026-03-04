@@ -70,3 +70,4 @@ class AnalyzeJournalRequest(BaseModel):
     current_slide_id: Optional[str] = None
     collection_title: Optional[str] = None
     direction: Optional[str] = None
+    your_story: Optional[str] = None
