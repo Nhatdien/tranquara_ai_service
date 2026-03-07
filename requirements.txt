@@ -17,3 +17,7 @@ pypdf
 qdrant_client
 #
 asyncio
+#memory scheduler
+apscheduler
+httpx
+numpy

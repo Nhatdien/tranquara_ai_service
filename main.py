@@ -10,6 +10,8 @@ from service.rabbitmq import rabbitmq_conn
 from models.messages import AITaskMessage, JournalIndexPayload, JournalDeletePayload
 from database.vector_database import index_journal, delete_journal
 from router.analyze import router as analyze_router
+from router.memory import router as memory_router
+from service.memory_scheduler import start_scheduler, stop_scheduler
 
 
 dotenv.load_dotenv()
@@ -76,19 +78,23 @@ async def start_rabbitmq_consumer():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: launch RabbitMQ consumer
+    # Startup: launch RabbitMQ consumer + memory scheduler
     consumer_task = asyncio.create_task(start_rabbitmq_consumer())
     print("[startup] RabbitMQ consumer started")
+    start_scheduler()
+    print("[startup] Memory generation scheduler started")
     yield
     # Shutdown
     consumer_task.cancel()
-    print("[shutdown] RabbitMQ consumer stopped")
+    stop_scheduler()
+    print("[shutdown] RabbitMQ consumer + scheduler stopped")
 
 
 app = FastAPI(lifespan=lifespan)
 
 # Register routers
 app.include_router(analyze_router)
+app.include_router(memory_router)
 
 # CORS
 app.add_middleware(

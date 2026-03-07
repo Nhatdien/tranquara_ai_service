@@ -3,33 +3,75 @@ from qdrant_client.models import Distance, VectorParams, Filter, FieldCondition,
 from langchain_qdrant import QdrantVectorStore
 from langchain_openai import OpenAIEmbeddings
 import os
+import numpy as np
 
 # Connect to your running Qdrant instance
 qdrant_host = os.getenv("QDRANT_HOST", "qdrant")
 qdrant_port = int(os.getenv("QDRANT_PORT", 6333))
 client = QdrantClient(host=qdrant_host, port=qdrant_port)
 
-# --- Journal Entries Collection (for RAG in Go Deeper) ---
-JOURNAL_COLLECTION = "journal_entries"
+# --- Shared config ---
 VECTOR_SIZE = 1536  # OpenAI text-embedding-ada-002
 DISTANCE_METRIC = Distance.COSINE
 
-if not client.collection_exists(JOURNAL_COLLECTION):
-    print(f"Creating collection: {JOURNAL_COLLECTION}")
-    client.recreate_collection(
-        collection_name=JOURNAL_COLLECTION,
-        vectors_config=VectorParams(size=VECTOR_SIZE, distance=DISTANCE_METRIC)
-    )
-else:
-    print(f"Collection '{JOURNAL_COLLECTION}' already exists.")
+JOURNAL_COLLECTION = "journal_entries"
+MEMORY_COLLECTION = "user_memories"
 
-embeddings = OpenAIEmbeddings()
+# --- Lazy initialization ---
+# QdrantVectorStore validates embeddings at construction time by calling
+# OpenAI's API. If the API key is invalid or the quota is exhausted, this
+# would crash the service on import. Lazy init defers that call until the
+# store is actually used, so the service can still start.
 
-journal_vector_store = QdrantVectorStore(
-    embedding=embeddings,
-    collection_name=JOURNAL_COLLECTION,
-    client=client
-)
+_embeddings = None
+_journal_vector_store = None
+_memory_vector_store = None
+
+
+def _get_embeddings():
+    """Lazily create the shared OpenAIEmbeddings instance."""
+    global _embeddings
+    if _embeddings is None:
+        _embeddings = OpenAIEmbeddings()
+    return _embeddings
+
+
+def _ensure_collection(name: str):
+    """Create a Qdrant collection if it doesn't already exist."""
+    if not client.collection_exists(name):
+        print(f"Creating collection: {name}")
+        client.recreate_collection(
+            collection_name=name,
+            vectors_config=VectorParams(size=VECTOR_SIZE, distance=DISTANCE_METRIC),
+        )
+    else:
+        print(f"Collection '{name}' already exists.")
+
+
+def _get_journal_vector_store() -> QdrantVectorStore:
+    """Lazily create the journal vector store (validates on first use)."""
+    global _journal_vector_store
+    if _journal_vector_store is None:
+        _ensure_collection(JOURNAL_COLLECTION)
+        _journal_vector_store = QdrantVectorStore(
+            embedding=_get_embeddings(),
+            collection_name=JOURNAL_COLLECTION,
+            client=client,
+        )
+    return _journal_vector_store
+
+
+def _get_memory_vector_store() -> QdrantVectorStore:
+    """Lazily create the memory vector store (validates on first use)."""
+    global _memory_vector_store
+    if _memory_vector_store is None:
+        _ensure_collection(MEMORY_COLLECTION)
+        _memory_vector_store = QdrantVectorStore(
+            embedding=_get_embeddings(),
+            collection_name=MEMORY_COLLECTION,
+            client=client,
+        )
+    return _memory_vector_store
 
 
 def search_user_journals(user_id: str, query: str, top_k: int = 5) -> list:
@@ -44,7 +86,7 @@ def search_user_journals(user_id: str, query: str, top_k: int = 5) -> list:
     Returns:
         List of matching Documents with metadata
     """
-    results = journal_vector_store.similarity_search(
+    results = _get_journal_vector_store().similarity_search(
         query=query,
         k=top_k,
         filter=Filter(
@@ -94,7 +136,7 @@ def index_journal(journal_id: str, user_id: str, content: str,
     )
 
     # Use journal_id as the vector point ID so updates overwrite the old entry
-    journal_vector_store.add_documents(
+    _get_journal_vector_store().add_documents(
         documents=[doc],
         ids=[journal_id]
     )
@@ -116,3 +158,163 @@ def delete_journal(journal_id: str):
         points_selector=PointIdsList(points=[journal_id])
     )
     print(f"Deleted journal {journal_id} from Qdrant")
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Memory Functions
+# ═══════════════════════════════════════════════════════════════════════════
+
+def search_user_memories(user_id: str, query: str, top_k: int = 10) -> list:
+    """
+    Retrieve a user's AI memories from Qdrant for RAG injection.
+    Used during journal follow-up question generation to provide stable user context.
+
+    Args:
+        user_id: The user's UUID string
+        query: The text to search for similar memories
+        top_k: Number of results to return
+
+    Returns:
+        List of matching Documents with metadata
+    """
+    results = _get_memory_vector_store().similarity_search(
+        query=query,
+        k=top_k,
+        filter=Filter(
+            must=[
+                FieldCondition(
+                    key="metadata.user_id",
+                    match=MatchValue(value=user_id)
+                )
+            ]
+        )
+    )
+    return results
+
+
+def get_all_user_memories(user_id: str, limit: int = 100) -> list:
+    """
+    Get ALL memories for a user (not similarity-based, just list all).
+    Used for deduplication during memory generation.
+
+    Args:
+        user_id: The user's UUID string
+        limit: Maximum number of memories to return
+
+    Returns:
+        List of matching Documents with metadata
+    """
+    from qdrant_client.models import ScrollRequest
+
+    results, _ = client.scroll(
+        collection_name=MEMORY_COLLECTION,
+        scroll_filter=Filter(
+            must=[
+                FieldCondition(
+                    key="metadata.user_id",
+                    match=MatchValue(value=user_id)
+                )
+            ]
+        ),
+        limit=limit,
+        with_payload=True,
+        with_vectors=True,
+    )
+    return results
+
+
+def index_memory(memory_id: str, user_id: str, content: str,
+                 category: str, confidence: float = 0.5,
+                 created_at: str = None):
+    """
+    Index an AI memory into Qdrant for RAG retrieval.
+    Uses memory_id as the point ID for upsert.
+
+    Args:
+        memory_id: UUID of the memory (used as Qdrant point ID)
+        user_id: UUID of the user who owns this memory
+        content: The memory text (e.g., "I value my family.")
+        category: Memory category (values, habits, patterns, etc.)
+        confidence: AI confidence score (0.0 - 1.0)
+        created_at: ISO timestamp
+    """
+    from langchain_core.documents import Document
+
+    doc = Document(
+        page_content=content,
+        metadata={
+            "memory_id": memory_id,
+            "user_id": user_id,
+            "category": category,
+            "confidence": confidence,
+            "created_at": created_at,
+            "type": "memory"
+        }
+    )
+
+    _get_memory_vector_store().add_documents(
+        documents=[doc],
+        ids=[memory_id]
+    )
+    print(f"Indexed memory {memory_id} for user {user_id}: {content[:50]}")
+
+
+def delete_memory(memory_id: str):
+    """
+    Delete a memory vector from Qdrant.
+    Called when a user deletes a memory from the UI.
+
+    Args:
+        memory_id: UUID of the memory (the Qdrant point ID)
+    """
+    from qdrant_client.models import PointIdsList
+
+    client.delete(
+        collection_name=MEMORY_COLLECTION,
+        points_selector=PointIdsList(points=[memory_id])
+    )
+    print(f"Deleted memory {memory_id} from Qdrant")
+
+
+def check_memory_duplicate(user_id: str, candidate_text: str,
+                           threshold: float = 0.85) -> bool:
+    """
+    Check if a candidate memory is semantically similar to any existing memory.
+    Uses cosine similarity of embeddings.
+
+    Args:
+        user_id: The user's UUID
+        candidate_text: The candidate memory text
+        threshold: Similarity threshold (0.85 = very similar)
+
+    Returns:
+        True if a duplicate exists (should skip), False if unique
+    """
+    try:
+        # Get existing memories with their vectors
+        existing = get_all_user_memories(user_id)
+        if not existing:
+            return False
+
+        # Embed the candidate
+        candidate_embedding = _get_embeddings().embed_query(candidate_text)
+        candidate_vec = np.array(candidate_embedding)
+
+        # Compare against all existing memory vectors
+        for point in existing:
+            if point.vector is not None:
+                existing_vec = np.array(point.vector)
+                # Cosine similarity
+                similarity = np.dot(candidate_vec, existing_vec) / (
+                    np.linalg.norm(candidate_vec) * np.linalg.norm(existing_vec)
+                )
+                if similarity >= threshold:
+                    existing_content = point.payload.get("page_content", "")
+                    print(f"[dedup] Duplicate found: '{candidate_text[:40]}' ≈ '{existing_content[:40]}' (sim={similarity:.3f})")
+                    return True
+
+        return False
+
+    except Exception as e:
+        print(f"[dedup] Error checking duplicate: {e}")
+        return False  # On error, allow the memory (better to have duplicate than miss)
