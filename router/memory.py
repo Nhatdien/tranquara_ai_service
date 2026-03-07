@@ -45,7 +45,8 @@ async def index_memory_endpoint(request: IndexMemoryRequest):
         )
         return {"status": "indexed", "memory_id": request.memory_id}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Qdrant indexing error: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Qdrant indexing error: {str(e)}")
 
 
 @router.delete("/api/internal/memory/{memory_id}")
@@ -58,4 +59,5 @@ async def delete_memory_endpoint(memory_id: str):
         delete_memory(memory_id=memory_id)
         return {"status": "deleted", "memory_id": memory_id}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Qdrant deletion error: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Qdrant deletion error: {str(e)}")

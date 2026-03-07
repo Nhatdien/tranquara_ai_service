@@ -149,7 +149,8 @@ class AIProcessor():
         journals_text = "\n\n".join(formatted_journals)
 
         # Format existing memories for dedup context
-        existing_text = "\n".join(f"- {m}" for m in existing_memories) if existing_memories else "(none yet)"
+        existing_text = "\n".join(
+            f"- {m}" for m in existing_memories) if existing_memories else "(none yet)"
 
         # Build prompt
         prompt = MEMORY_EXTRACTION_PROMPT.format(
@@ -159,7 +160,8 @@ class AIProcessor():
 
         try:
             response = self.model.invoke([
-                SystemMessage(content="You are a precise data extraction assistant. Return only valid JSON."),
+                SystemMessage(
+                    content="You are a precise data extraction assistant. Return only valid JSON."),
                 HumanMessage(content=prompt)
             ])
 

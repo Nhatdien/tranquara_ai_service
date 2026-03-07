@@ -22,7 +22,8 @@ CORE_SERVICE_URL = os.getenv("CORE_SERVICE_URL", "http://core-service:4000")
 INTERNAL_API_KEY = os.getenv("INTERNAL_API_KEY", "")
 
 # Scheduler interval (hours)
-MEMORY_GENERATION_INTERVAL_HOURS = int(os.getenv("MEMORY_INTERVAL_HOURS", "12"))
+MEMORY_GENERATION_INTERVAL_HOURS = int(
+    os.getenv("MEMORY_INTERVAL_HOURS", "12"))
 
 scheduler = AsyncIOScheduler()
 
@@ -138,7 +139,8 @@ async def process_user_memories(user_id: str, since: str):
                     created_at=memory.get("created_at"),
                 )
 
-        print(f"[memory-scheduler] User {user_id}: {len(created)} memories created + indexed")
+        print(
+            f"[memory-scheduler] User {user_id}: {len(created)} memories created + indexed")
 
     except Exception as e:
         print(f"[memory-scheduler] Error processing user {user_id}: {e}")
@@ -149,9 +151,11 @@ async def run_memory_generation():
     Main periodic job: find active users and extract memories.
     Runs every 12 hours.
     """
-    print(f"[memory-scheduler] Starting memory generation cycle at {datetime.now(timezone.utc).isoformat()}")
+    print(
+        f"[memory-scheduler] Starting memory generation cycle at {datetime.now(timezone.utc).isoformat()}")
 
-    since = (datetime.now(timezone.utc) - timedelta(hours=MEMORY_GENERATION_INTERVAL_HOURS)).isoformat()
+    since = (datetime.now(timezone.utc) -
+             timedelta(hours=MEMORY_GENERATION_INTERVAL_HOURS)).isoformat()
 
     # 1. Get users with recent journal activity
     user_ids = await _fetch_active_users(since)
@@ -172,7 +176,8 @@ async def run_memory_generation():
             error_count += 1
             print(f"[memory-scheduler] Failed for user {user_id}: {e}")
 
-    print(f"[memory-scheduler] Cycle complete: {success_count} success, {error_count} errors")
+    print(
+        f"[memory-scheduler] Cycle complete: {success_count} success, {error_count} errors")
 
 
 def start_scheduler():
@@ -187,7 +192,8 @@ def start_scheduler():
         next_run_time=None,  # Don't run immediately on startup
     )
     scheduler.start()
-    print(f"[memory-scheduler] Scheduler started (every {MEMORY_GENERATION_INTERVAL_HOURS}h)")
+    print(
+        f"[memory-scheduler] Scheduler started (every {MEMORY_GENERATION_INTERVAL_HOURS}h)")
 
 
 def stop_scheduler():

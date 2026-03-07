@@ -42,7 +42,8 @@ def _ensure_collection(name: str):
         print(f"Creating collection: {name}")
         client.recreate_collection(
             collection_name=name,
-            vectors_config=VectorParams(size=VECTOR_SIZE, distance=DISTANCE_METRIC),
+            vectors_config=VectorParams(
+                size=VECTOR_SIZE, distance=DISTANCE_METRIC),
         )
     else:
         print(f"Collection '{name}' already exists.")
@@ -306,15 +307,18 @@ def check_memory_duplicate(user_id: str, candidate_text: str,
                 existing_vec = np.array(point.vector)
                 # Cosine similarity
                 similarity = np.dot(candidate_vec, existing_vec) / (
-                    np.linalg.norm(candidate_vec) * np.linalg.norm(existing_vec)
+                    np.linalg.norm(candidate_vec) *
+                    np.linalg.norm(existing_vec)
                 )
                 if similarity >= threshold:
                     existing_content = point.payload.get("page_content", "")
-                    print(f"[dedup] Duplicate found: '{candidate_text[:40]}' ≈ '{existing_content[:40]}' (sim={similarity:.3f})")
+                    print(
+                        f"[dedup] Duplicate found: '{candidate_text[:40]}' ≈ '{existing_content[:40]}' (sim={similarity:.3f})")
                     return True
 
         return False
 
     except Exception as e:
         print(f"[dedup] Error checking duplicate: {e}")
-        return False  # On error, allow the memory (better to have duplicate than miss)
+        # On error, allow the memory (better to have duplicate than miss)
+        return False
