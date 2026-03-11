@@ -161,6 +161,68 @@ def delete_journal(journal_id: str):
     print(f"Deleted journal {journal_id} from Qdrant")
 
 
+def get_user_journals_by_date_range(user_id: str, date_start: str,
+                                     date_end: str, limit: int = 200) -> list:
+    """
+    Scroll ALL journal entries for a user within a date range from Qdrant.
+    Unlike search_user_journals (similarity-based), this retrieves all matching entries.
+
+    Qdrant doesn't natively support date range filters, so we scroll all user
+    journals and filter by created_at in Python.
+
+    Args:
+        user_id: The user's UUID string
+        date_start: ISO date string (e.g. "2026-03-01")
+        date_end: ISO date string (e.g. "2026-03-11")
+        limit: Maximum number of points to scroll
+
+    Returns:
+        List of dicts with journal metadata + content
+    """
+    try:
+        results, _ = client.scroll(
+            collection_name=JOURNAL_COLLECTION,
+            scroll_filter=Filter(
+                must=[
+                    FieldCondition(
+                        key="metadata.user_id",
+                        match=MatchValue(value=user_id)
+                    )
+                ]
+            ),
+            limit=limit,
+            with_payload=True,
+            with_vectors=False,
+        )
+
+        # Filter by date range in Python
+        filtered = []
+        for point in results:
+            payload = point.payload or {}
+            metadata = payload.get("metadata", {})
+            created_at = metadata.get("created_at", "")
+
+            # Compare date portion only (ISO format sorts lexicographically)
+            entry_date = created_at[:10] if created_at else ""
+            if date_start <= entry_date <= date_end:
+                filtered.append({
+                    "journal_id": metadata.get("journal_id", ""),
+                    "title": metadata.get("title", "Untitled"),
+                    "content": payload.get("page_content", ""),
+                    "mood_score": metadata.get("mood_score"),
+                    "mood_label": metadata.get("mood_label"),
+                    "created_at": created_at,
+                })
+
+        print(f"[qdrant] Found {len(filtered)} journals for user {user_id} "
+              f"in range {date_start} – {date_end} (scrolled {len(results)} total)")
+        return filtered
+
+    except Exception as e:
+        print(f"[qdrant] Error scrolling user journals: {e}")
+        return []
+
+
 # ═══════════════════════════════════════════════════════════════════════════
 # Memory Functions
 # ═══════════════════════════════════════════════════════════════════════════

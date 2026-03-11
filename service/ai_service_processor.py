@@ -1,7 +1,7 @@
 import os
 import json
 from dotenv import load_dotenv
-from service.prompts import get_system_prompt
+from service.prompts import get_system_prompt, PREP_PACK_SYSTEM_PROMPT, PREP_PACK_PROMPT
 from langchain_openai.chat_models import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
 from database.vector_database import (
@@ -353,3 +353,70 @@ Generate the question now:"""
             question = question[1:-1]
 
         return question
+
+    def generate_prep_pack(self, journal_entries: list[dict],
+                           memories: list[str], language: str = "en") -> dict:
+        """
+        Generate a structured Therapy Session Prep Pack from journal entries and AI memories.
+
+        Args:
+            journal_entries: List of dicts with 'title', 'content', 'mood_score', 'created_at'
+            memories: List of memory content strings
+            language: 'en' or 'vi'
+
+        Returns:
+            Structured prep pack dict matching the PrepPack TypeScript type
+        """
+        # Format journal entries
+        entries_text = "\n\n".join([
+            f"Date: {e.get('created_at', 'unknown')}\n"
+            f"Title: {e.get('title', 'Untitled')}\n"
+            f"Mood: {e.get('mood_score', 'N/A')}/10\n"
+            f"Content: {e.get('content', '')[:800]}"
+            for e in journal_entries
+        ]) or "(no journal entries)"
+
+        # Format memories
+        memories_text = "\n".join(
+            f"- {m}" for m in memories
+        ) if memories else "(no known patterns yet)"
+
+        prompt = PREP_PACK_PROMPT.format(
+            journal_entries=entries_text,
+            memories=memories_text,
+            language=language,
+        )
+
+        try:
+            response = self.model.invoke([
+                SystemMessage(content=PREP_PACK_SYSTEM_PROMPT),
+                HumanMessage(content=prompt),
+            ])
+
+            raw = response.content.strip()
+
+            # Strip markdown code block if present
+            if raw.startswith("```"):
+                raw = raw.split("\n", 1)[1] if "\n" in raw else raw[3:]
+                if raw.endswith("```"):
+                    raw = raw[:-3]
+                raw = raw.strip()
+
+            result = json.loads(raw)
+
+            # Validate required top-level keys
+            required_keys = {"mood_overview", "key_themes", "emotional_highlights",
+                             "patterns", "discussion_points", "growth_moments"}
+            missing = required_keys - set(result.keys())
+            if missing:
+                print(f"[prep-pack] Warning: missing keys in AI response: {missing}")
+
+            return result
+
+        except json.JSONDecodeError as e:
+            print(f"[prep-pack] JSON parse error: {e}")
+            print(f"[prep-pack] Raw response: {raw[:500]}")
+            raise ValueError(f"AI returned invalid JSON: {e}")
+        except Exception as e:
+            print(f"[prep-pack] Error generating prep pack: {e}")
+            raise

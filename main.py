@@ -11,6 +11,7 @@ from models.messages import AITaskMessage, JournalIndexPayload, JournalDeletePay
 from database.vector_database import index_journal, delete_journal
 from router.analyze import router as analyze_router
 from router.memory import router as memory_router
+from router.prep_pack import router as prep_pack_router
 from service.memory_scheduler import start_scheduler, stop_scheduler
 
 
@@ -95,6 +96,7 @@ app = FastAPI(lifespan=lifespan)
 # Register routers
 app.include_router(analyze_router)
 app.include_router(memory_router)
+app.include_router(prep_pack_router)
 
 # CORS
 app.add_middleware(

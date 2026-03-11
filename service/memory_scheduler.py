@@ -6,7 +6,7 @@ Runs every 12 hours, processes users with new journal activity.
 
 Flow:
   1. Fetch active users (with recent journal activity) from Go backend
-  2. For each user: fetch recent journals + existing memories
+  2. For each user: fetch recent journals from Qdrant + existing memories from Qdrant
   3. Send to GPT for extraction → deduplicate → store in PostgreSQL + Qdrant
 """
 
@@ -15,9 +15,13 @@ import httpx
 from datetime import datetime, timezone, timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from service.ai_service_processor import AIProcessor
-from database.vector_database import index_memory, get_all_user_memories
+from database.vector_database import (
+    index_memory,
+    get_all_user_memories,
+    get_user_journals_by_date_range,
+)
 
-# Go backend internal API base URL
+# Go backend internal API base URL (only used for active-users + batch-create)
 CORE_SERVICE_URL = os.getenv("CORE_SERVICE_URL", "http://core-service:4000")
 INTERNAL_API_KEY = os.getenv("INTERNAL_API_KEY", "")
 
@@ -29,7 +33,8 @@ scheduler = AsyncIOScheduler()
 
 
 async def _fetch_active_users(since: str) -> list[str]:
-    """Fetch user IDs with recent journal activity from Go backend."""
+    """Fetch user IDs with recent journal activity from Go backend.
+    This must call Go because Qdrant doesn't track per-user activity timestamps."""
     try:
         async with httpx.AsyncClient(timeout=30) as client:
             response = await client.get(
@@ -45,37 +50,27 @@ async def _fetch_active_users(since: str) -> list[str]:
         return []
 
 
-async def _fetch_user_journals(user_id: str, since: str) -> list[dict]:
-    """Fetch recent journals for a user from Go backend."""
-    try:
-        async with httpx.AsyncClient(timeout=30) as client:
-            response = await client.get(
-                f"{CORE_SERVICE_URL}/v1/internal/user-journals",
-                params={"user_id": user_id, "since": since},
-                headers={"X-Internal-Key": INTERNAL_API_KEY},
-            )
-            response.raise_for_status()
-            data = response.json()
-            return data.get("journals", [])
-    except Exception as e:
-        print(f"[memory-scheduler] Error fetching journals for {user_id}: {e}")
-        return []
+def _get_user_journals_from_qdrant(user_id: str, since: str) -> list[dict]:
+    """Fetch recent journals for a user directly from Qdrant.
+    Journals are synced to Qdrant via the RabbitMQ pipeline (journal.index events)."""
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    date_start = since[:10] if since else today
+    return get_user_journals_by_date_range(
+        user_id=user_id,
+        date_start=date_start,
+        date_end=today,
+    )
 
 
-async def _fetch_existing_memories(user_id: str) -> list[dict]:
-    """Fetch existing memories for a user from Go backend."""
-    try:
-        async with httpx.AsyncClient(timeout=30) as client:
-            response = await client.get(
-                f"{CORE_SERVICE_URL}/v1/internal/ai-memories/{user_id}",
-                headers={"X-Internal-Key": INTERNAL_API_KEY},
-            )
-            response.raise_for_status()
-            data = response.json()
-            return data.get("memories", [])
-    except Exception as e:
-        print(f"[memory-scheduler] Error fetching memories for {user_id}: {e}")
-        return []
+def _get_existing_memories_from_qdrant(user_id: str) -> list[str]:
+    """Fetch existing memory contents for a user directly from Qdrant.
+    Memories are indexed in Qdrant alongside PostgreSQL storage."""
+    raw_memories = get_all_user_memories(user_id)
+    return [
+        point.payload.get("page_content", "")
+        for point in raw_memories
+        if point.payload and point.payload.get("page_content")
+    ]
 
 
 async def _store_memories(user_id: str, memories: list[dict]) -> list[dict]:
@@ -103,14 +98,13 @@ async def process_user_memories(user_id: str, since: str):
     Process a single user: fetch journals, extract memories, store + index.
     """
     try:
-        # 1. Fetch recent journals
-        journals = await _fetch_user_journals(user_id, since)
+        # 1. Fetch recent journals from Qdrant
+        journals = _get_user_journals_from_qdrant(user_id, since)
         if not journals:
             return
 
-        # 2. Fetch existing memories (for dedup prompt context)
-        existing = await _fetch_existing_memories(user_id)
-        existing_contents = [m.get("content", "") for m in existing]
+        # 2. Fetch existing memories from Qdrant (for dedup prompt context)
+        existing_contents = _get_existing_memories_from_qdrant(user_id)
 
         # 3. Extract new memories via GPT
         ai_processor = AIProcessor()
