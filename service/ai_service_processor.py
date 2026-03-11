@@ -409,7 +409,8 @@ Generate the question now:"""
                              "patterns", "discussion_points", "growth_moments"}
             missing = required_keys - set(result.keys())
             if missing:
-                print(f"[prep-pack] Warning: missing keys in AI response: {missing}")
+                print(
+                    f"[prep-pack] Warning: missing keys in AI response: {missing}")
 
             return result
 

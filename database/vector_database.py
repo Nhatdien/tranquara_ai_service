@@ -162,7 +162,7 @@ def delete_journal(journal_id: str):
 
 
 def get_user_journals_by_date_range(user_id: str, date_start: str,
-                                     date_end: str, limit: int = 200) -> list:
+                                    date_end: str, limit: int = 200) -> list:
     """
     Scroll ALL journal entries for a user within a date range from Qdrant.
     Unlike search_user_journals (similarity-based), this retrieves all matching entries.
